@@ -1,0 +1,116 @@
+/* ===========================================
+   SIDEBAR
+=========================================== */
+
+.sidebar{
+    width:260px;
+    height:100vh;
+    background:#081B10;
+    border-right:2px solid #28A745;
+    padding:25px 20px;
+    overflow-y:auto;
+}
+
+/* Logo */
+
+.sidebar-logo{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.sidebar-logo h2{
+    color:#28A745;
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:5px;
+}
+
+.sidebar-logo p{
+    color:#c8d1dc;
+    font-size:14px;
+    margin:0;
+}
+
+/* Menu */
+
+.sidebar-menu{
+    display:flex;
+    flex-direction:column;
+}
+
+/* Links */
+
+.sidebar-link{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:#ffffff;
+    padding:14px 18px;
+    margin-bottom:10px;
+    border-radius:12px;
+    font-weight:500;
+    transition:.3s;
+}
+
+/* Hover */
+
+.sidebar-link:hover{
+    background:#28A745;
+    color:#ffffff;
+    transform:translateX(5px);
+}
+
+/* Active */
+
+.sidebar-link.active{
+    background:#28A745;
+    color:#ffffff;
+    font-weight:600;
+    box-shadow:0 5px 15px rgba(40,167,69,.25);
+}
+
+/* Scroll */
+
+.sidebar::-webkit-scrollbar{
+    width:6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb{
+    background:#28A745;
+    border-radius:10px;
+}
+
+.sidebar::-webkit-scrollbar-track{
+    background:#081B10;
+}
+
+/* ===========================================
+   MOBILE
+=========================================== */
+
+@media (max-width:992px){
+
+.sidebar{
+
+    width:260px;
+    height:100vh;
+    padding:20px;
+    border-right:2px solid #28A745;
+    box-shadow:8px 0 25px rgba(0,0,0,.35);
+
+}
+
+.sidebar-logo{
+
+    margin-top:55px;
+
+}
+
+.sidebar-link{
+
+    font-size:16px;
+
+}
+
+}

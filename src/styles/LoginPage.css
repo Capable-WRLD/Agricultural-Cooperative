@@ -1,0 +1,153 @@
+.login-page{
+  min-height:100vh;
+  background:#0A192F;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
+}
+
+.login-container{
+  width:100%;
+  max-width:1300px;
+  min-height:750px;
+  background:#fff;
+  border-radius:25px;
+  overflow:hidden;
+  display:flex;
+}
+
+.login-left{
+  flex:1;
+  padding:70px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.login-right{
+  flex:1;
+  background:linear-gradient(
+    135deg,
+    #0f5132,
+    #198754,
+    #28a745
+  );
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  padding:60px;
+}
+
+.login-brand{
+  font-size:30px;
+  font-weight:700;
+  color:#28a745;
+  margin-bottom:20px;
+}
+
+.login-title{
+  font-size:60px;
+  font-weight:700;
+  line-height:1.1;
+  margin-bottom:15px;
+}
+
+.login-subtitle{
+  color:#666;
+  margin-bottom:30px;
+  font-size:18px;
+}
+
+.login-left input{
+  width:100%;
+  height:58px;
+  margin-bottom:18px;
+  padding:0 18px;
+  border:1px solid #ddd;
+  border-radius:10px;
+}
+
+.password-wrapper{
+  position:relative;
+}
+
+.show-btn{
+  position:absolute;
+  right:15px;
+  top:50%;
+  transform:translateY(-50%);
+  border:none;
+  background:none;
+  color:#28a745;
+  font-weight:600;
+}
+
+.login-left .btn{
+  height:58px;
+  border-radius:10px;
+}
+
+.dashboard-preview{
+  text-align:center;
+}
+
+.dashboard-preview h2{
+  font-size:50px;
+  margin-bottom:20px;
+}
+
+.dashboard-preview p{
+  font-size:20px;
+  margin-bottom:50px;
+}
+
+.preview-stats{
+  display:flex;
+  gap:20px;
+  justify-content:center;
+}
+
+.preview-stats div{
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(12px);
+  padding:25px;
+  border-radius:15px;
+  min-width:130px;
+}
+
+.preview-stats h3{
+  font-size:30px;
+  margin-bottom:5px;
+}
+
+.register-link{
+  text-align:center;
+  margin-top:25px;
+}
+
+.register-link a{
+  color:#28a745;
+  text-decoration:none;
+  font-weight:600;
+}
+
+@media (max-width:992px){
+
+  .login-container{
+    flex-direction:column;
+  }
+
+  .login-right{
+    display:none;
+  }
+
+  .login-left{
+    padding:35px;
+  }
+
+  .login-title{
+    font-size:40px;
+  }
+}

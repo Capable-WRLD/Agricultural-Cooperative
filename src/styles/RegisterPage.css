@@ -1,0 +1,154 @@
+.register-page{
+  min-height:100vh;
+  background:#0A192F;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:30px;
+}
+
+.register-container{
+  width:100%;
+  max-width:1300px;
+  min-height:750px;
+  background:#ffffff;
+  border-radius:25px;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.register-left{
+  padding:50px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.register-brand{
+  font-size:30px;
+  font-weight:700;
+  color:#28A745;
+  margin-bottom:20px;
+}
+
+.register-title{
+  font-size:42px;
+  font-weight:700;
+  color:#111;
+  margin-bottom:10px;
+}
+
+.register-subtitle{
+  color:#666;
+  margin-bottom:25px;
+}
+
+.role-switch{
+  display:flex;
+  gap:10px;
+  margin-bottom:25px;
+}
+
+.role-switch button{
+  border:none;
+  padding:12px 25px;
+  border-radius:10px;
+  background:#e9ecef;
+  font-weight:600;
+  cursor:pointer;
+  transition:.3s;
+}
+
+.active-role{
+  background:#28A745 !important;
+  color:white !important;
+}
+
+.role-switch button:hover{
+  transform:translateY(-2px);
+}
+
+.register-left input{
+  height:50px;
+}
+
+.register-left a{
+  text-decoration:none;
+  color:#28A745;
+  font-weight:600;
+}
+
+.register-right{
+  background:linear-gradient(
+    135deg,
+    #0f5132,
+    #198754,
+    #28A745
+  );
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:50px;
+}
+
+.register-preview{
+  text-align:center;
+}
+
+.register-preview h2{
+  font-size:42px;
+  margin-bottom:20px;
+  font-weight:700;
+}
+
+.register-preview p{
+  font-size:18px;
+  opacity:.95;
+  margin-bottom:40px;
+}
+
+.register-stats{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+
+.register-stats div{
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(10px);
+  border-radius:15px;
+  padding:20px;
+  min-width:130px;
+}
+
+.register-stats h3{
+  font-size:28px;
+  margin-bottom:5px;
+}
+
+.register-stats span{
+  font-size:14px;
+}
+
+@media(max-width:992px){
+
+  .register-container{
+    grid-template-columns:1fr;
+  }
+
+  .register-right{
+    display:none;
+  }
+
+  .register-left{
+    padding:35px;
+  }
+
+  .register-title{
+    font-size:32px;
+  }
+
+}

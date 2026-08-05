@@ -1,0 +1,286 @@
+/* ==========================
+   MEMBERS PAGE
+========================== */
+
+.members-page{
+    background:#061A0D;
+    min-height:100vh;
+    padding:25px;
+    color:#fff;
+}
+
+/* ==========================
+   HEADER
+========================== */
+
+.members-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#0B2413;
+    border:1px solid #1E5C33;
+    border-radius:16px;
+    padding:20px 25px;
+    margin-bottom:25px;
+}
+
+.members-header h2{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:5px;
+    color:#fff;
+}
+
+.members-header p{
+    margin:0;
+    color:#b6d2c0;
+}
+
+/* ==========================
+   ORGANIZATION CARD
+========================== */
+
+.organization-card{
+    background:#0B2413;
+    border:1px solid #1E5C33;
+    border-radius:16px;
+    padding:25px;
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.organization-card h3{
+    color:#fff;
+    font-size:26px;
+    margin-bottom:10px;
+}
+
+.organization-card p{
+    color:#c7d8cf;
+    margin-bottom:8px;
+}
+
+.organization-code{
+    color:#28A745;
+    font-size:36px;
+    font-weight:700;
+    letter-spacing:3px;
+}
+
+/* ==========================
+   STATS
+========================== */
+
+.member-stat-card{
+    background:#0B2413;
+    border:1px solid #1E5C33;
+    border-radius:16px;
+    text-align:center;
+    padding:20px;
+    transition:.3s;
+    height:130px;
+}
+
+.member-stat-card:hover{
+    transform:translateY(-5px);
+    border-color:#28A745;
+    box-shadow:0 10px 30px rgba(40,167,69,.25);
+}
+
+.member-stat-card h6{
+    color:#c8d9ce;
+    margin-bottom:10px;
+}
+
+.member-stat-card h2{
+    color:#28A745;
+    font-size:34px;
+    font-weight:700;
+}
+
+/* ==========================
+   SEARCH
+========================== */
+
+.members-search input{
+    background:#10331D;
+    border:1px solid #1E5C33;
+    color:#fff;
+    border-radius:10px;
+    height:50px;
+}
+
+.members-search input:focus{
+    background:#10331D;
+    color:#fff;
+    border-color:#28A745;
+    box-shadow:0 0 12px rgba(40,167,69,.25);
+}
+
+.members-search input::placeholder{
+    color:#b8d2c2;
+}
+
+/* ==========================
+   TABLE CARD
+========================== */
+
+.members-table{
+    background:#0B2413;
+    border:1px solid #1E5C33;
+    border-radius:16px;
+    padding:20px;
+    margin-top:25px;
+}
+
+/* Bootstrap table override */
+
+.members-table .table{
+    margin:0;
+    background:transparent !important;
+    color:white;
+}
+
+.members-table table{
+    background:transparent !important;
+}
+
+.members-table thead{
+    background:#124A25;
+}
+
+.members-table th{
+    color:#fff;
+    border:none;
+    padding:15px;
+    background:#124A25 !important;
+}
+
+.members-table td{
+    color:#dbe8e0;
+    border-top:1px solid rgba(255,255,255,.06);
+    padding:15px;
+    background:transparent !important;
+}
+
+.members-table tr{
+    background:transparent !important;
+}
+
+.members-table tr:hover{
+    background:#113A1F !important;
+}
+
+/* ==========================
+   PROFILE
+========================== */
+
+.member-profile{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.member-profile img{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:2px solid #28A745;
+}
+
+/* ==========================
+   BUTTONS
+========================== */
+
+.members-table .btn{
+    border-radius:8px;
+    padding:6px 14px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.btn-success{
+    background:#28A745;
+    border:none;
+}
+
+.btn-success:hover{
+    background:#21953A;
+}
+
+.btn-danger{
+    border:none;
+}
+
+.btn-primary{
+    background:#28A745 !important;
+    border:none !important;
+}
+
+.btn-primary:hover{
+    background:#21953A !important;
+}
+
+/* ==========================
+   EMPTY STATE
+========================== */
+
+.empty-members{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.empty-icon{
+    font-size:60px;
+    margin-bottom:15px;
+}
+
+.empty-members h3,
+.empty-members h4{
+    color:#fff;
+    font-size:24px;
+    margin-bottom:10px;
+}
+
+.empty-members p{
+    color:#c5d7cb;
+    margin-bottom:0;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:992px){
+
+.members-page{
+    padding:15px;
+}
+
+.members-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+}
+
+.organization-card{
+    padding:20px;
+}
+
+.organization-code{
+    font-size:28px;
+}
+
+.member-stat-card{
+    height:auto;
+}
+
+.members-table{
+    overflow-x:auto;
+}
+
+.members-table table{
+    min-width:850px;
+}
+
+}

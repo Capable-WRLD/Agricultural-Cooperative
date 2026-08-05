@@ -1,0 +1,266 @@
+/* ===========================================
+   SAVINGS PAGE
+=========================================== */
+
+.savings-page{
+    width:100%;
+    min-height:100vh;
+    color:#ffffff;
+}
+
+/* ===========================================
+   HEADER
+=========================================== */
+
+.savings-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+
+    border-radius:18px;
+
+    padding:25px 30px;
+    margin-bottom:25px;
+}
+
+.savings-header h2{
+    color:#ffffff;
+    font-size:30px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.savings-header p{
+    color:#c8d1dc;
+    margin:0;
+}
+
+/* ===========================================
+   GLASS CARD
+=========================================== */
+
+.glass-card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    border-radius:18px;
+    color:white;
+}
+
+/* ===========================================
+   STATISTICS
+=========================================== */
+
+.stat-card{
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:18px;
+
+    backdrop-filter:blur(12px);
+
+    padding:25px;
+
+    text-align:center;
+
+    transition:.35s;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-5px);
+
+    border-color:#28A745;
+
+    box-shadow:0 0 18px rgba(40,167,69,.25);
+
+}
+
+.stat-card h6{
+
+    color:#c8d1dc;
+
+    margin-bottom:12px;
+
+}
+
+.stat-card h2{
+
+    color:#28A745;
+
+    font-size:36px;
+
+    font-weight:700;
+
+}
+
+/* ===========================================
+   TABLE
+=========================================== */
+
+.savings-table{
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+.savings-table h4{
+
+    color:white;
+
+    margin-bottom:20px;
+
+    font-weight:700;
+
+}
+
+.table-responsive{
+
+    overflow-x:auto;
+
+}
+
+.savings-table table{
+
+    width:100%;
+
+    margin:0;
+
+    background:transparent !important;
+
+}
+
+.savings-table thead{
+
+    background:#081B10 !important;
+
+}
+
+.savings-table th{
+
+    background:#081B10 !important;
+
+    color:#28A745;
+
+    border:none;
+
+    padding:18px;
+
+    font-weight:700;
+
+}
+
+.savings-table td{
+
+    background:transparent !important;
+
+    color:white;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    padding:18px;
+
+}
+
+.savings-table tr:hover{
+
+    background:rgba(40,167,69,.08);
+
+}
+
+.text-success{
+
+    color:#28A745 !important;
+
+}
+
+.badge{
+
+    background:#28A745 !important;
+
+    color:white;
+
+    padding:8px 14px;
+
+    border-radius:8px;
+
+}
+
+/* ===========================================
+   RESPONSIVE
+=========================================== */
+
+@media(max-width:992px){
+
+.savings-header{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+    gap:15px;
+
+    padding:20px;
+
+}
+
+.savings-header h2{
+
+    font-size:24px;
+
+}
+
+.stat-card{
+
+    margin-bottom:15px;
+
+}
+
+.savings-table{
+
+    padding:15px;
+
+}
+
+}
+
+@media(max-width:576px){
+
+.savings-header{
+
+    padding:18px;
+
+}
+
+.stat-card h2{
+
+    font-size:28px;
+
+}
+
+.savings-table th,
+
+.savings-table td{
+
+    font-size:14px;
+
+    padding:12px;
+
+}
+
+}

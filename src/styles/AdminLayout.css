@@ -1,0 +1,136 @@
+/* ===========================================
+   ADMIN LAYOUT
+=========================================== */
+
+.admin-layout{
+    display:flex;
+    min-height:100vh;
+    background:#0A192F;
+}
+
+/* ===========================================
+   MOBILE HEADER
+=========================================== */
+
+.mobile-header{
+    display:none;
+}
+
+/* ===========================================
+   SIDEBAR CONTAINER
+=========================================== */
+
+.sidebar-container{
+    width:260px;
+    min-width:260px;
+    flex-shrink:0;
+}
+
+/* ===========================================
+   MAIN CONTENT
+=========================================== */
+
+.admin-content{
+    flex:1;
+    margin-left:260px;
+    min-height:100vh;
+    background:#0A192F;
+    color:#fff;
+    padding:30px;
+    transition:.35s ease;
+}
+
+/* ===========================================
+   GLASS CARD
+=========================================== */
+
+.glass-card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    border-radius:18px;
+    color:#fff;
+}
+
+/* ===========================================
+   MOBILE RESPONSIVE
+=========================================== */
+
+@media (max-width:992px){
+
+.admin-layout{
+    display:block;
+}
+
+/* Mobile Top Header */
+
+.mobile-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    height:65px;
+    padding:0 20px;
+    background:#081B10;
+    border-bottom:2px solid #28A745;
+    z-index:2000;
+}
+
+.mobile-header h3{
+    color:#28A745;
+    font-size:22px;
+    font-weight:700;
+    margin:0;
+}
+
+/* Menu Button */
+
+.menu-btn{
+    background:none;
+    border:none;
+    color:#28A745;
+    font-size:30px;
+    cursor:pointer;
+    padding:0;
+}
+
+/* Sidebar */
+
+.sidebar-container{
+    position:fixed;
+    top:0;
+    left:-270px;
+    width:260px;
+    height:100vh;
+    z-index:2200;
+    transition:left .35s ease;
+}
+
+.sidebar-container.open{
+    left:0;
+}
+
+/* Dark Overlay */
+
+.sidebar-overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,.55);
+    z-index:2100;
+}
+
+/* Main Content */
+
+.admin-content{
+    margin-left:0;
+    padding:90px 18px 20px;
+    width:100%;
+}
+
+}

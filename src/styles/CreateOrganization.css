@@ -1,0 +1,163 @@
+.create-org-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0b3d2e, #14532d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.create-org-container {
+  width: 95%;
+  max-width: 1250px;
+  display: flex;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,.35);
+}
+
+.org-left {
+  flex: 1;
+  padding: 60px;
+  background: rgba(255,255,255,.05);
+}
+
+.org-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+      rgba(11,61,46,.85),
+      rgba(20,83,45,.85)
+    ),
+    url("https://images.unsplash.com/photo-1500937386664-56d1dfef3854?w=1200");
+  background-size: cover;
+  background-position: center;
+}
+
+.org-badge {
+  background: #2E8B57;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 30px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.org-left h1 {
+  margin-top: 20px;
+  color: white;
+  font-size: 42px;
+}
+
+.org-left p {
+  color: #d9d9d9;
+  margin-bottom: 30px;
+}
+
+.org-left form {
+  display: flex;
+  flex-direction: column;
+}
+
+.org-left input,
+.org-left select,
+.org-left textarea {
+  margin-bottom: 18px;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.org-left textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.org-left input:focus,
+.org-left select:focus,
+.org-left textarea:focus {
+  box-shadow: 0 0 0 3px rgba(244,180,0,.4);
+}
+
+.org-left button {
+  margin-top: 10px;
+  padding: 16px;
+  background: #F4B400;
+  color: #0b3d2e;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.org-left button:hover {
+  background: white;
+  transform: translateY(-3px);
+}
+
+.illustration {
+  text-align: center;
+  color: white;
+  padding: 40px;
+}
+
+.illustration {
+  animation: floatCard 4s ease-in-out infinite;
+}
+
+.illustration h2 {
+  margin-top: 20px;
+  font-size: 36px;
+  color: #F4B400;
+}
+
+.illustration p {
+  margin-top: 20px;
+  line-height: 1.7;
+  color: #eee;
+  font-size: 18px;
+}
+
+@keyframes floatCard {
+
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-12px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+
+}
+
+@media (max-width:900px){
+
+.create-org-container{
+flex-direction:column;
+}
+
+.org-right{
+min-height:350px;
+}
+
+.org-left{
+padding:35px;
+}
+
+.org-left h1{
+font-size:32px;
+}
+
+}
