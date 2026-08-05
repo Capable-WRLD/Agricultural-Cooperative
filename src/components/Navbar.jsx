@@ -7,7 +7,7 @@ function Navbar() {
       <div className="container">
 
         <Link className="navbar-brand fw-bold text-success" to="/">
-          🌾 AgroCoopiiiiiiiiiiiiiiiiiiiii
+          🌾 AgroCoopiiiiiiiiiiiiiiiiiiii
         </Link>
 
         <button
