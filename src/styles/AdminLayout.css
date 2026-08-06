@@ -5,7 +5,7 @@
 .admin-layout{
     display:flex;
     min-height:100vh;
-    background:#0A192F;
+    background:#061A0D;
 }
 
 /* ===========================================
@@ -32,9 +32,8 @@
 
 .admin-content{
     flex:1;
-    margin-left:260px;
     min-height:100vh;
-    background:#0A192F;
+    background:#061A0D;
     color:#fff;
     padding:30px;
     transition:.35s ease;

@@ -28,7 +28,7 @@ function SavingsPage() {
 
         {/* Header */}
 
-        <div className="glass-card savings-header">
+        <div className="savings-header">
 
           <div>
 
@@ -44,11 +44,11 @@ function SavingsPage() {
 
         {/* Statistics */}
 
-        <div className="row g-4">
+        <div className="row g-4 savings-stats">
 
           <div className="col-lg-4 col-md-6">
 
-            <div className="glass-card stat-card">
+            <div className="savings-card">
 
               <h6>Total Savings</h6>
 
@@ -60,7 +60,7 @@ function SavingsPage() {
 
           <div className="col-lg-4 col-md-6">
 
-            <div className="glass-card stat-card">
+            <div className="savings-card">
 
               <h6>Total Contributors</h6>
 
@@ -72,7 +72,7 @@ function SavingsPage() {
 
           <div className="col-lg-4 col-md-12">
 
-            <div className="glass-card stat-card">
+            <div className="savings-card">
 
               <h6>This Month</h6>
 
@@ -130,7 +130,7 @@ function SavingsPage() {
 
                     <td>
 
-                      <span className="badge bg-success">
+                      <span className="savings-badge">
 
                         {item.status}
 

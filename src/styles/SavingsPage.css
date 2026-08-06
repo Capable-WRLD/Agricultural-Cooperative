@@ -3,9 +3,10 @@
 =========================================== */
 
 .savings-page{
-    width:100%;
+    background:#061A0D;
     min-height:100vh;
-    color:#ffffff;
+    padding:25px;
+    color:#fff;
 }
 
 /* ===========================================
@@ -13,22 +14,15 @@
 =========================================== */
 
 .savings-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(12px);
-
-    border-radius:18px;
-
+    background:#0B2413;
+    border:1px solid #1E5C33;
+    border-radius:16px;
     padding:25px 30px;
     margin-bottom:25px;
 }
 
 .savings-header h2{
-    color:#ffffff;
+    color:#fff;
     font-size:30px;
     font-weight:700;
     margin-bottom:8px;
@@ -40,65 +34,38 @@
 }
 
 /* ===========================================
-   GLASS CARD
-=========================================== */
-
-.glass-card{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(12px);
-    border-radius:18px;
-    color:white;
-}
-
-/* ===========================================
    STATISTICS
 =========================================== */
 
-.stat-card{
+.savings-stats{
+    margin-top:20px;
+}
 
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    border-radius:18px;
-
-    backdrop-filter:blur(12px);
-
-    padding:25px;
-
+.savings-card{
+    background:#0B2413;
+    border:1px solid #1E5C33;
+    border-radius:16px;
     text-align:center;
-
-    transition:.35s;
-
+    padding:24px;
+    transition:.3s;
+    height:150px;
 }
 
-.stat-card:hover{
-
+.savings-card:hover{
     transform:translateY(-5px);
-
     border-color:#28A745;
-
-    box-shadow:0 0 18px rgba(40,167,69,.25);
-
+    box-shadow:0 10px 30px rgba(40,167,69,.25);
 }
 
-.stat-card h6{
-
-    color:#c8d1dc;
-
-    margin-bottom:12px;
-
+.savings-card h6{
+    color:#c8d9ce;
+    margin-bottom:10px;
 }
 
-.stat-card h2{
-
+.savings-card h2{
     color:#28A745;
-
-    font-size:36px;
-
+    font-size:34px;
     font-weight:700;
-
 }
 
 /* ===========================================
@@ -106,161 +73,87 @@
 =========================================== */
 
 .savings-table{
-
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    backdrop-filter:blur(12px);
-
-    border-radius:18px;
-
-    padding:25px;
-
+    background:#0B2413;
+    border:1px solid #1E5C33;
+    border-radius:16px;
+    padding:24px;
+    margin-top:25px;
 }
 
 .savings-table h4{
-
-    color:white;
-
+    color:#fff;
     margin-bottom:20px;
-
     font-weight:700;
-
 }
 
-.table-responsive{
-
-    overflow-x:auto;
-
-}
-
-.savings-table table{
-
-    width:100%;
-
+.savings-table .table{
     margin:0;
-
     background:transparent !important;
-
+    color:#fff;
 }
 
 .savings-table thead{
-
-    background:#081B10 !important;
-
+    background:#124A25;
 }
 
 .savings-table th{
-
-    background:#081B10 !important;
-
-    color:#28A745;
-
+    color:#fff;
     border:none;
-
-    padding:18px;
-
-    font-weight:700;
-
+    padding:15px;
+    background:#124A25 !important;
 }
 
 .savings-table td{
-
+    color:#dbe8e0;
+    border-top:1px solid rgba(255,255,255,.06);
+    padding:15px;
     background:transparent !important;
-
-    color:white;
-
-    border-top:1px solid rgba(255,255,255,.08);
-
-    padding:18px;
-
 }
 
 .savings-table tr:hover{
-
-    background:rgba(40,167,69,.08);
-
+    background:#113A1F !important;
 }
 
-.text-success{
-
-    color:#28A745 !important;
-
+.savings-badge{
+    background:#28A745;
+    color:#fff;
+    border-radius:12px;
+    padding:6px 12px;
+    font-size:.9rem;
+    font-weight:600;
 }
-
-.badge{
-
-    background:#28A745 !important;
-
-    color:white;
-
-    padding:8px 14px;
-
-    border-radius:8px;
-
-}
-
-/* ===========================================
-   RESPONSIVE
-=========================================== */
 
 @media(max-width:992px){
+    .savings-page{
+        padding:15px;
+    }
 
-.savings-header{
+    .savings-header{
+        padding:20px;
+    }
 
-    flex-direction:column;
+    .savings-card{
+        height:auto;
+        margin-bottom:15px;
+    }
 
-    align-items:flex-start;
-
-    gap:15px;
-
-    padding:20px;
-
-}
-
-.savings-header h2{
-
-    font-size:24px;
-
-}
-
-.stat-card{
-
-    margin-bottom:15px;
-
-}
-
-.savings-table{
-
-    padding:15px;
-
-}
-
+    .savings-table{
+        padding:20px;
+    }
 }
 
 @media(max-width:576px){
+    .savings-header{
+        padding:18px;
+    }
 
-.savings-header{
+    .savings-card h2{
+        font-size:28px;
+    }
 
-    padding:18px;
-
-}
-
-.stat-card h2{
-
-    font-size:28px;
-
-}
-
-.savings-table th,
-
-.savings-table td{
-
-    font-size:14px;
-
-    padding:12px;
-
-}
-
+    .savings-table th,
+    .savings-table td{
+        font-size:14px;
+        padding:12px;
+    }
 }

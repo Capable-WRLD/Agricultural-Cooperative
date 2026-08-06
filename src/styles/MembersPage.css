@@ -163,6 +163,10 @@
     background:transparent !important;
 }
 
+.members-table td.member-name{
+    color:#ffffff;
+}
+
 .members-table tr{
     background:transparent !important;
 }

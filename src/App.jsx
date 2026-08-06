@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
@@ -16,6 +16,8 @@ import LoansPage from "./pages/LoansPage";
 import InventoryPage from "./pages/InventoryPage";
 import ReportsPage from "./pages/ReportsPage";
 import SettingsPage from "./pages/SettingsPage";
+
+import ProtectedRoute from "./components/ProtectedRoute";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -35,27 +37,98 @@ function App() {
         <Route path="/verify-email" element={<VerifyEmail />} />
 
         {/* After Verification */}
-        <Route path="/choose-role" element={<ChooseRole />} />
+        <Route
+          path="/choose-role"
+          element={
+            <ProtectedRoute>
+              <ChooseRole />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/create-organization"
-          element={<CreateOrganization />}
+          element={
+            <ProtectedRoute>
+              <CreateOrganization />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/join-organization"
-          element={<JoinOrganization />}
+          element={
+            <ProtectedRoute>
+              <JoinOrganization />
+            </ProtectedRoute>
+          }
         />
 
         {/* Dashboards */}
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/member" element={<MemberDashboard />} />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/member"
+          element={
+            <ProtectedRoute>
+              <MemberDashboard />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Admin Pages */}
-        <Route path="/members" element={<MembersPage />} />
-        <Route path="/savings" element={<SavingsPage />} />
-        <Route path="/loans" element={<LoansPage />} />
-        <Route path="/inventory" element={<InventoryPage />} />
-        <Route path="/reports" element={<ReportsPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route
+          path="/members"
+          element={
+            <ProtectedRoute>
+              <MembersPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/savings"
+          element={
+            <ProtectedRoute>
+              <SavingsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/loans"
+          element={
+            <ProtectedRoute>
+              <LoansPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/inventory"
+          element={
+            <ProtectedRoute>
+              <InventoryPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reports"
+          element={
+            <ProtectedRoute>
+              <ReportsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <SettingsPage />
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
 

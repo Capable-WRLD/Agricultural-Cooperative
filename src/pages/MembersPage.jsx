@@ -1,6 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import "../styles/MembersPage.css";
+
+import { auth, db } from "../firebase";
+
+import {
+  doc,
+  getDoc,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 
 function MembersPage() {
   const [search, setSearch] = useState("");
@@ -176,7 +185,7 @@ function MembersPage() {
 
                     <tr key={member.id}>
 
-                      <td>{member.fullName}</td>
+                      <td className="member-name">{member.fullName}</td>
 
                       <td>{member.phone}</td>
 
@@ -255,7 +264,7 @@ function MembersPage() {
 
                     <tr key={member.id}>
 
-                      <td>{member.fullName}</td>
+                      <td className="member-name">{member.fullName}</td>
 
                       <td>{member.phone}</td>
 

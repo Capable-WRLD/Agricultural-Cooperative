@@ -153,6 +153,38 @@ body{
   box-shadow:0 0 25px rgba(40,167,69,.4);
 }
 
+.stat-card{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;
+  backdrop-filter:blur(12px);
+  padding:25px;
+  text-align:center;
+  transition:.35s;
+}
+
+.stat-card:hover{
+  transform:translateY(-5px);
+  border-color:#28A745;
+  box-shadow:0 0 18px rgba(40,167,69,.25);
+}
+
+.stat-card h5{
+  color:#c8d1dc;
+  margin-bottom:12px;
+}
+
+.stat-card h2{
+  color:#28A745;
+  font-size:36px;
+  font-weight:700;
+}
+
+.stat-card i{
+  color:#28A745;
+  font-size:2.5rem;
+}
+
 .footer{
   background:#030805;
   padding:40px 0;
