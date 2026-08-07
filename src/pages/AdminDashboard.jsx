@@ -1,14 +1,60 @@
 import { useEffect, useState } from "react";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
 import Sidebar from "../components/Sidebar";
 import StatsCard from "../components/StatsCard";
 import { getDashboardData } from "../services/dashboardService";
 
 function AdminDashboard() {
   const [dashboard, setDashboard] = useState(null);
+  const [approvedMembers, setApprovedMembers] = useState([]);
+  const [totalMembers, setTotalMembers] = useState(0);
+  const [activeMembers, setActiveMembers] = useState(0);
 
   useEffect(() => {
     loadDashboard();
   }, []);
+
+  useEffect(() => {
+    if (!dashboard) return;
+
+    const organizationId =
+      dashboard?.organization?.id ||
+      dashboard?.organizationId ||
+      dashboard?.organization?.organizationId;
+
+    if (!organizationId) return;
+
+    const membersRef = collection(
+      db,
+      "organizations",
+      organizationId,
+      "members"
+    );
+
+    const unsubscribe = onSnapshot(
+      membersRef,
+      (snapshot) => {
+        const membersData = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+
+        setApprovedMembers(membersData);
+        setTotalMembers(membersData.length);
+        setActiveMembers(
+          membersData.filter(
+            (member) => member.status === "Active"
+          ).length
+        );
+      },
+      (error) => {
+        console.error("Error listening for member updates:", error);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [dashboard]);
 
   const loadDashboard = async () => {
     try {
@@ -95,7 +141,7 @@ function AdminDashboard() {
             <div className="col-md-3">
               <StatsCard
                 title="Members"
-                value="1"
+                value={totalMembers}
                 icon="bi-people-fill"
               />
             </div>
@@ -111,7 +157,7 @@ function AdminDashboard() {
             <div className="col-md-3">
               <StatsCard
                 title="Loans"
-                value="0"
+                value={activeMembers}
                 icon="bi-cash-stack"
               />
             </div>
@@ -143,20 +189,16 @@ function AdminDashboard() {
           {/* Notifications */}
 
           <div className="glass-card p-4 mt-4">
-
-            <h4 className="mb-3">
-              Notifications
-            </h4>
+            <h4 className="mb-3">Notifications</h4>
 
             {notifications.map((item, index) => (
               <div
                 key={index}
-                className="alert alert-success"
+                className="alert alert-success text-white"
               >
                 {item}
               </div>
             ))}
-
           </div>
 
         </div>

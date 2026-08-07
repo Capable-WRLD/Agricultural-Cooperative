@@ -79,8 +79,9 @@ export const joinOrganization = async (
   organization,
   user
 ) => {
-  // Read current user profile from Firestore
+  // Read current user profile
   const userRef = doc(db, "users", user.uid);
+
   const userSnap = await getDoc(userRef);
 
   if (!userSnap.exists()) {
@@ -89,7 +90,7 @@ export const joinOrganization = async (
 
   const userData = userSnap.data();
 
-  // Save member inside organization
+  // Save member under organization
   await setDoc(
     doc(
       db,
@@ -100,9 +101,9 @@ export const joinOrganization = async (
     ),
     {
       uid: user.uid,
-      fullName: userData.fullName || "",
-      email: userData.email || "",
-      phone: userData.phone || "",
+      fullName: userData.fullName,
+      email: userData.email,
+      phone: userData.phone,
       savings: userData.savings || 0,
       loanBalance: userData.loanBalance || 0,
       role: "Member",
@@ -111,15 +112,14 @@ export const joinOrganization = async (
     }
   );
 
-  // Update user document
-  await updateDoc(
-    doc(db, "users", user.uid),
-    {
-      organizationId: organization.id,
-      organizationName: organization.organizationName,
-      organizationCode: organization.organizationCode,
-      role: "Member",
-      status: "Active",
-    }
-  );
+  // Update user's profile
+  await updateDoc(userRef, {
+    organizationId: organization.id,
+    organizationName: organization.organizationName,
+    organizationCode: organization.organizationCode,
+    role: "Member",
+    status: "Active",
+  });
+
+  return true;
 };

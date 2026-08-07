@@ -15,12 +15,60 @@ function MembersPage() {
   const [search, setSearch] = useState("");
 
   // Temporary data
-  const organizationName = "Green Valley Farmers Cooperative";
-  const organizationCode = "GRE-483921";
+  const [organizationName, setOrganizationName] = useState("");
+const [organizationCode, setOrganizationCode] = useState("");
 
-  const pendingRequests = [];
+  const [pendingRequests, setPendingRequests] = useState([]);
+const [approvedMembers, setApprovedMembers] = useState([]);
+const [membersLoading, setMembersLoading] = useState(true);
 
-  const approvedMembers = [];
+  useEffect(() => {
+  loadOrganization();
+  }, []);
+
+const loadOrganization = async () => {
+  try {
+    const user = auth.currentUser;
+
+    if (!user) return;
+
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+
+    if (!userDoc.exists()) return;
+
+    const userData = userDoc.data();
+
+    setOrganizationName(userData.organizationName || "");
+    setOrganizationCode(userData.organizationCode || "");
+
+    // Load members
+    const membersRef = collection(
+      db,
+      "organizations",
+      userData.organizationId,
+      "members"
+    );
+
+    setMembersLoading(true);
+
+    try {
+      const snapshot = await getDocs(membersRef);
+
+      const membersData = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setApprovedMembers(membersData);
+    } catch (error) {
+      console.error("Error loading approved members:", error);
+    } finally {
+      setMembersLoading(false);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   const copyCode = () => {
     navigator.clipboard.writeText(organizationCode);
@@ -263,25 +311,11 @@ function MembersPage() {
                   {approvedMembers.map((member) => (
 
                     <tr key={member.id}>
-
-                      <td className="member-name">{member.fullName}</td>
-
+                      <td>{member.fullName}</td>
+                      <td>{member.email}</td>
                       <td>{member.phone}</td>
-
-                      <td>₦0</td>
-
-                      <td>
-
-                        <button className="btn btn-primary me-2">
-                          View
-                        </button>
-
-                        <button className="btn btn-danger">
-                          Remove
-                        </button>
-
-                      </td>
-
+                      <td>{member.status}</td>
+                      <td>{member.role}</td>
                     </tr>
 
                   ))}
