@@ -9,6 +9,16 @@
     border-right:2px solid #28A745;
     padding:25px 20px;
     overflow-y:auto;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1100;
+}
+
+/* If the sidebar is inside the admin layout container, keep it static
+   because the AdminLayout already positions the sidebar container. */
+.sidebar-container .sidebar {
+    position:static;
 }
 
 /* Logo */
@@ -98,6 +108,7 @@
     padding:20px;
     border-right:2px solid #28A745;
     box-shadow:8px 0 25px rgba(0,0,0,.35);
+    position:relative; /* mobile: let sidebar flow with page */
 
 }
 

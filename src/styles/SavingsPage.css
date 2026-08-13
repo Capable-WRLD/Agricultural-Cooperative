@@ -1,159 +1,1014 @@
-/* ===========================================
-   SAVINGS PAGE
-=========================================== */
+/* =========================================================
+   AGROCOOP MEMBER SAVINGS PAGE
+   ========================================================= */
 
-.savings-page{
-    background:#061A0D;
-    min-height:100vh;
-    padding:25px;
-    color:#fff;
+.savings-layout {
+  min-height: 100vh;
+  display: flex;
+  background: #061a0d;
+  color: #ffffff;
 }
 
-/* ===========================================
-   HEADER
-=========================================== */
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
 
-.savings-header{
-    background:#0B2413;
-    border:1px solid #1E5C33;
-    border-radius:16px;
-    padding:25px 30px;
-    margin-bottom:25px;
+.savings-sidebar {
+  width: 230px;
+  min-width: 230px;
+  min-height: 100vh;
+  background: #071c10;
+  border-right: 1px solid rgba(70, 160, 90, 0.2);
 }
 
-.savings-header h2{
-    color:#fff;
-    font-size:30px;
-    font-weight:700;
-    margin-bottom:8px;
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.savings-main {
+  flex: 1;
+  padding: 35px;
+  min-width: 0;
+  overflow-x: hidden;
 }
 
-.savings-header p{
-    color:#c8d1dc;
-    margin:0;
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.savings-page-header {
+  margin-bottom: 25px;
 }
 
-/* ===========================================
+.savings-eyebrow {
+  display: block;
+  color: #28a745;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.savings-page-header h1 {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 750;
+  color: #ffffff;
+}
+
+.savings-title-icon {
+  margin-right: 10px;
+}
+
+.savings-page-header p {
+  margin: 8px 0 0;
+  color: #aebeb4;
+  font-size: 15px;
+}
+
+/* =========================================================
+   BALANCE
+   ========================================================= */
+
+.savings-balance-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 25px;
+  margin-bottom: 20px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(15, 64, 31, 0.95),
+    rgba(8, 39, 20, 0.95)
+  );
+
+  border: 1px solid rgba(40, 167, 69, 0.45);
+  border-radius: 18px;
+
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.balance-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(40, 167, 69, 0.18);
+  border: 1px solid rgba(40, 167, 69, 0.35);
+
+  font-size: 29px;
+}
+
+.balance-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.balance-content span {
+  color: #9db0a3;
+  font-size: 14px;
+}
+
+.balance-content strong {
+  color: #28e060;
+  font-size: 32px;
+  margin: 2px 0;
+}
+
+.balance-content small {
+  color: #7f9788;
+}
+
+/* =========================================================
    STATISTICS
-=========================================== */
+   ========================================================= */
 
-.savings-stats{
-    margin-top:20px;
+.savings-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 22px;
 }
 
-.savings-card{
-    background:#0B2413;
-    border:1px solid #1E5C33;
-    border-radius:16px;
-    text-align:center;
-    padding:24px;
-    transition:.3s;
-    height:150px;
+.savings-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 21px;
+
+  background: #0a2415;
+  border: 1px solid rgba(51, 119, 70, 0.55);
+  border-radius: 16px;
+
+  transition: 0.25s ease;
 }
 
-.savings-card:hover{
-    transform:translateY(-5px);
-    border-color:#28A745;
-    box-shadow:0 10px 30px rgba(40,167,69,.25);
+.savings-stat-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(40, 167, 69, 0.75);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
 }
 
-.savings-card h6{
-    color:#c8d9ce;
-    margin-bottom:10px;
+.stat-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 13px;
+  font-size: 22px;
 }
 
-.savings-card h2{
-    color:#28A745;
-    font-size:34px;
-    font-weight:700;
+.stat-icon.green {
+  background: rgba(40, 167, 69, 0.15);
 }
 
-/* ===========================================
-   TABLE
-=========================================== */
-
-.savings-table{
-    background:#0B2413;
-    border:1px solid #1E5C33;
-    border-radius:16px;
-    padding:24px;
-    margin-top:25px;
+.stat-icon.blue {
+  background: rgba(0, 123, 255, 0.14);
 }
 
-.savings-table h4{
-    color:#fff;
-    margin-bottom:20px;
-    font-weight:700;
+.stat-icon.yellow {
+  background: rgba(255, 193, 7, 0.14);
 }
 
-.savings-table .table{
-    margin:0;
-    background:transparent !important;
-    color:#fff;
+.savings-stat-card span {
+  display: block;
+  color: #9aac9f;
+  font-size: 13px;
+  margin-bottom: 4px;
 }
 
-.savings-table thead{
-    background:#124A25;
+.savings-stat-card strong {
+  display: block;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
 }
 
-.savings-table th{
-    color:#fff;
-    border:none;
-    padding:15px;
-    background:#124A25 !important;
+.savings-stat-card small {
+  color: #6f8879;
+  font-size: 12px;
 }
 
-.savings-table td{
-    color:#dbe8e0;
-    border-top:1px solid rgba(255,255,255,.06);
-    padding:15px;
-    background:transparent !important;
+/* =========================================================
+   MAIN CONTENT GRID
+   ========================================================= */
+
+.savings-content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  margin-bottom: 22px;
 }
 
-.savings-table tr:hover{
-    background:#113A1F !important;
+/* =========================================================
+   PANELS
+   ========================================================= */
+
+.savings-panel {
+  background: #092317;
+  border: 1px solid rgba(51, 119, 70, 0.55);
+  border-radius: 18px;
+  overflow: hidden;
 }
 
-.savings-badge{
-    background:#28A745;
-    color:#fff;
-    border-radius:12px;
-    padding:6px 12px;
-    font-size:.9rem;
-    font-weight:600;
+.panel-header {
+  padding: 22px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
-@media(max-width:992px){
-    .savings-page{
-        padding:15px;
-    }
-
-    .savings-header{
-        padding:20px;
-    }
-
-    .savings-card{
-        height:auto;
-        margin-bottom:15px;
-    }
-
-    .savings-table{
-        padding:20px;
-    }
+.panel-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
 }
 
-@media(max-width:576px){
-    .savings-header{
-        padding:18px;
-    }
-
-    .savings-card h2{
-        font-size:28px;
-    }
-
-    .savings-table th,
-    .savings-table td{
-        font-size:14px;
-        padding:12px;
-    }
+.panel-header p {
+  margin: 6px 0 0;
+  color: #7f9788;
+  font-size: 13px;
 }
+
+.panel-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+  background: rgba(40, 167, 69, 0.12);
+
+  font-size: 20px;
+}
+
+/* =========================================================
+   EMPTY STATES
+   ========================================================= */
+
+.empty-payment-state,
+.history-empty {
+  min-height: 350px;
+  padding: 50px 25px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.empty-icon {
+  width: 65px;
+  height: 65px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.35);
+
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.empty-payment-state h3,
+.history-empty h3 {
+  color: #ffffff;
+  font-size: 17px;
+  margin-bottom: 8px;
+}
+
+.empty-payment-state p,
+.history-empty p {
+  color: #728a7b;
+  font-size: 13px;
+  max-width: 390px;
+  margin: 0;
+}
+
+/* =========================================================
+   PAYMENT STATUS
+   ========================================================= */
+
+.payment-status-card {
+  padding: 23px;
+}
+
+.payment-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.payment-top span,
+.payment-info-grid span,
+.receipt-section > span {
+  display: block;
+  color: #758c7e;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.payment-top strong {
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.payment-status-badge,
+.history-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 7px 13px;
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.payment-status-badge.pending,
+.history-status.pending {
+  color: #ffd45a;
+  background: rgba(255, 193, 7, 0.13);
+  border: 1px solid rgba(255, 193, 7, 0.28);
+}
+
+.payment-status-badge.approved,
+.history-status.approved {
+  color: #50e879;
+  background: rgba(40, 167, 69, 0.13);
+  border: 1px solid rgba(40, 167, 69, 0.28);
+}
+
+.payment-status-badge.rejected,
+.history-status.rejected {
+  color: #ff7777;
+  background: rgba(220, 53, 69, 0.13);
+  border: 1px solid rgba(220, 53, 69, 0.28);
+}
+
+/* =========================================================
+   PAYMENT INFO
+   ========================================================= */
+
+.payment-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+
+  padding: 22px 0;
+}
+
+.payment-info-grid strong {
+  display: block;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.amount-green {
+  color: #28d95b !important;
+  font-size: 18px !important;
+}
+
+/* =========================================================
+   RECEIPT
+   ========================================================= */
+
+.receipt-section {
+  padding: 15px;
+
+  background: rgba(255, 255, 255, 0.025);
+  border-radius: 12px;
+
+  margin-bottom: 18px;
+}
+
+.receipt-link {
+  color: #4ee777;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.receipt-link:hover {
+  color: #79f29a;
+  text-decoration: underline;
+}
+
+.no-receipt {
+  color: #728a7b;
+  font-size: 13px;
+}
+
+/* =========================================================
+   STATUS MESSAGES
+   ========================================================= */
+
+.status-message {
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.status-message strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.status-message p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.status-message small {
+  display: block;
+  margin-top: 8px;
+  color: #a8b9ae;
+}
+
+.pending-message {
+  background: rgba(255, 193, 7, 0.08);
+  border: 1px solid rgba(255, 193, 7, 0.2);
+}
+
+.pending-message strong {
+  color: #ffd45a;
+}
+
+.pending-message p {
+  color: #c2b982;
+}
+
+.approved-message {
+  background: rgba(40, 167, 69, 0.08);
+  border: 1px solid rgba(40, 167, 69, 0.2);
+}
+
+.approved-message strong {
+  color: #4ee777;
+}
+
+.approved-message p {
+  color: #a5c9ad;
+}
+
+.rejected-message {
+  background: rgba(220, 53, 69, 0.08);
+  border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.rejected-message strong {
+  color: #ff6d75;
+}
+
+.rejected-message p {
+  color: #c99b9e;
+}
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.payment-progress {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+
+  min-width: 65px;
+}
+
+.progress-step span {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #122c1d;
+  border: 1px solid #294937;
+
+  color: #6f8879;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.progress-step label {
+  color: #657b6e;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.progress-step.active span {
+  background: #28a745;
+  border-color: #28a745;
+  color: #ffffff;
+}
+
+.progress-step.active label {
+  color: #a7c4ae;
+}
+
+.progress-line {
+  height: 2px;
+  flex: 1;
+  background: #203b2a;
+  margin: 0 5px;
+  margin-bottom: 22px;
+}
+
+.progress-line.active {
+  background: #28a745;
+}
+
+/* =========================================================
+   PAYMENT DETAILS
+   ========================================================= */
+
+.payment-details-box {
+  margin: 20px 22px 0;
+  padding: 17px;
+
+  background: rgba(40, 167, 69, 0.06);
+  border: 1px solid rgba(40, 167, 69, 0.2);
+  border-radius: 12px;
+}
+
+.payment-details-box h3 {
+  margin: 0 0 13px;
+  color: #4ee777;
+  font-size: 14px;
+}
+
+.payment-detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 7px 0;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.payment-detail-row:last-of-type {
+  border-bottom: none;
+}
+
+.payment-detail-row span,
+.payment-instructions span {
+  color: #718a7a;
+  font-size: 12px;
+}
+
+.payment-detail-row strong {
+  color: #ffffff;
+  font-size: 12px;
+  text-align: right;
+}
+
+.payment-instructions {
+  margin-top: 12px;
+}
+
+.payment-instructions p {
+  color: #a9baae;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 5px 0 0;
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.savings-form {
+  padding: 22px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  color: #dce9df;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-group input {
+  width: 100%;
+  height: 46px;
+
+  padding: 0 13px;
+
+  background: #061b0f !important;
+  border: 1px solid #28523a !important;
+  border-radius: 10px !important;
+
+  color: #ffffff !important;
+
+  font-size: 13px;
+  outline: none;
+  box-shadow: none !important;
+}
+
+.form-group input::placeholder {
+  color: #5f7668 !important;
+}
+
+.form-group input:focus {
+  border-color: #28a745 !important;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1) !important;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-wrapper > span {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  color: #28d95b;
+  font-weight: 700;
+  z-index: 2;
+}
+
+.input-wrapper input {
+  padding-left: 32px;
+}
+
+/* Date input */
+
+.form-group input[type="date"] {
+  color-scheme: dark;
+}
+
+/* =========================================================
+   FILE UPLOAD
+   ========================================================= */
+
+.file-upload-box {
+  min-height: 80px;
+
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  padding: 14px;
+
+  background: #061b0f;
+  border: 1px dashed #356749;
+  border-radius: 12px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.file-upload-box:hover {
+  border-color: #28a745;
+  background: rgba(40, 167, 69, 0.04);
+}
+
+.upload-icon {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: rgba(40, 167, 69, 0.12);
+
+  font-size: 20px;
+}
+
+.file-upload-box strong {
+  display: block;
+  color: #dce9df;
+  font-size: 13px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 280px;
+}
+
+.file-upload-box small {
+  display: block;
+  color: #61796a;
+  margin-top: 3px;
+  font-size: 11px;
+}
+
+/* =========================================================
+   SUBMIT BUTTON
+   ========================================================= */
+
+.submit-payment-btn {
+  width: 100%;
+  height: 48px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #28a745;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.submit-payment-btn:hover:not(:disabled) {
+  background: #32bd51;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(40, 167, 69, 0.2);
+}
+
+.submit-payment-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.button-spinner {
+  width: 15px;
+  height: 15px;
+
+  display: inline-block;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+
+  border-radius: 50%;
+
+  animation: savings-spin 0.7s linear infinite;
+
+  margin-right: 7px;
+}
+
+@keyframes savings-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.form-notice {
+  margin-top: 12px;
+
+  color: #6e8878;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+/* =========================================================
+   HISTORY
+   ========================================================= */
+
+.history-panel {
+  margin-bottom: 30px;
+}
+
+.history-count {
+  padding: 7px 12px;
+
+  background: rgba(40, 167, 69, 0.1);
+  border: 1px solid rgba(40, 167, 69, 0.2);
+
+  border-radius: 20px;
+
+  color: #45d968;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.history-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.savings-history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.savings-history-table th {
+  padding: 14px 20px;
+
+  background: #0d2c1b;
+
+  color: #8fa899;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+.savings-history-table td {
+  padding: 15px 20px;
+
+  color: #c7d6cc;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.045);
+
+  font-size: 12px;
+
+  white-space: nowrap;
+}
+
+.savings-history-table tbody tr:hover {
+  background: rgba(40, 167, 69, 0.035);
+}
+
+.history-amount {
+  color: #43dc66 !important;
+  font-weight: 700;
+}
+
+.view-receipt-btn {
+  color: #45dc68;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.view-receipt-btn:hover {
+  color: #83f49c;
+  text-decoration: underline;
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.savings-loading {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: #061a0d;
+  color: #ffffff;
+}
+
+.savings-loading-spinner {
+  width: 35px;
+  height: 35px;
+
+  border: 3px solid rgba(40, 167, 69, 0.2);
+  border-top-color: #28a745;
+
+  border-radius: 50%;
+
+  animation: savings-spin 0.8s linear infinite;
+
+  margin-bottom: 15px;
+}
+
+.savings-loading h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.savings-loading p {
+  color: #718a7a;
+  font-size: 12px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+  .savings-main {
+    padding: 25px;
+  }
+
+  .savings-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 850px) {
+
+  .savings-sidebar {
+    width: 200px;
+    min-width: 200px;
+  }
+
+  .savings-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+@media (max-width: 650px) {
+
+  .savings-layout {
+    display: block;
+  }
+
+  .savings-sidebar {
+    width: 100%;
+    min-width: 0;
+    min-height: auto;
+  }
+
+  .savings-main {
+    padding: 18px;
+  }
+
+  .savings-page-header h1 {
+    font-size: 27px;
+  }
+
+  .savings-balance-card {
+    padding: 18px;
+  }
+
+  .balance-content strong {
+    font-size: 26px;
+  }
+
+  .payment-info-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .payment-top {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .payment-progress {
+    overflow-x: auto;
+  }
+
+  .progress-step {
+    min-width: 70px;
+  }
+
+  .panel-header {
+    padding: 18px;
+  }
+
+  .savings-form {
+    padding: 18px;
+  }
+
+}   

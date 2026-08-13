@@ -1,0 +1,563 @@
+```css
+/* =========================================
+   ADMIN SAVINGS PAGE
+   ========================================= */
+
+.admin-savings-layout {
+  min-height: 100vh;
+  width: 100%;
+  background: #061a0d;
+  color: #ffffff;
+}
+
+.admin-savings-page {
+  min-height: 100vh;
+  padding: 30px;
+  background:
+    radial-gradient(circle at top right, rgba(40, 167, 69, 0.08), transparent 30%),
+    #061a0d;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.admin-savings-header {
+  background: linear-gradient(
+    135deg,
+    rgba(11, 36, 19, 0.98),
+    rgba(8, 28, 15, 0.98)
+  );
+  border: 1px solid #1e5c33;
+  border-radius: 18px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.savings-page-label {
+  display: inline-block;
+  color: #5edc7c;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.admin-savings-header h1 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.admin-savings-header p {
+  margin: 8px 0 0;
+  color: #aebfb3;
+  font-size: 15px;
+}
+
+/* =========================================
+   APPROVED SUMMARY
+   ========================================= */
+
+.approved-summary-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(11, 50, 25, 0.98),
+    rgba(8, 34, 18, 0.98)
+  );
+
+  border: 1px solid #1e5c33;
+  border-radius: 18px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+.approved-summary-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(40, 167, 69, 0.15);
+  border: 1px solid rgba(40, 167, 69, 0.35);
+
+  font-size: 27px;
+}
+
+.approved-summary-card p {
+  margin: 0 0 4px;
+  color: #aebfb3;
+  font-size: 14px;
+}
+
+.approved-summary-card h2 {
+  margin: 0;
+  color: #45d36a;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.approved-summary-card span {
+  display: block;
+  margin-top: 4px;
+  color: #81968a;
+  font-size: 13px;
+}
+
+/* =========================================
+   MAIN TRANSACTION CARD
+   ========================================= */
+
+.admin-savings-card {
+  background: rgba(11, 36, 19, 0.96);
+  border: 1px solid #1e5c33;
+  border-radius: 18px;
+  overflow: hidden;
+
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.savings-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 25px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.savings-card-header h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.savings-card-header p {
+  margin: 7px 0 0;
+  color: #9fb1a5;
+  font-size: 14px;
+}
+
+.transaction-count {
+  white-space: nowrap;
+
+  background: rgba(40, 167, 69, 0.14);
+  border: 1px solid rgba(40, 167, 69, 0.35);
+
+  color: #55dc76;
+
+  padding: 8px 14px;
+  border-radius: 20px;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* =========================================
+   EMPTY STATE
+   ========================================= */
+
+.admin-savings-empty {
+  min-height: 330px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  padding: 50px 25px;
+}
+
+.empty-savings-icon {
+  width: 75px;
+  height: 75px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(40, 167, 69, 0.10);
+  border: 1px solid rgba(40, 167, 69, 0.25);
+
+  font-size: 32px;
+
+  margin-bottom: 18px;
+}
+
+.admin-savings-empty h3 {
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+
+.admin-savings-empty p {
+  max-width: 430px;
+  color: #8fa196;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* =========================================
+   TABLE
+   ========================================= */
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.admin-savings-table {
+  width: 100%;
+  min-width: 1100px;
+
+  border-collapse: collapse;
+  color: #ffffff;
+}
+
+.admin-savings-table thead {
+  background: #124a25;
+}
+
+.admin-savings-table th {
+  padding: 15px 16px;
+
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+
+  text-align: left;
+  white-space: nowrap;
+
+  border-bottom: 1px solid #1e5c33;
+}
+
+.admin-savings-table td {
+  padding: 16px;
+
+  color: #c9d8ce;
+  font-size: 13px;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+  background: transparent;
+  vertical-align: middle;
+}
+
+.admin-savings-table tbody tr {
+  transition: 0.2s ease;
+}
+
+.admin-savings-table tbody tr:hover {
+  background: rgba(40, 167, 69, 0.06);
+}
+
+/* =========================================
+   MEMBER CELL
+   ========================================= */
+
+.member-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 170px;
+}
+
+.member-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(40, 167, 69, 0.14);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+
+  font-size: 18px;
+}
+
+.member-cell strong {
+  display: block;
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.member-cell small {
+  display: block;
+  margin-top: 3px;
+  color: #718579;
+  font-size: 10px;
+
+  max-width: 130px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================================
+   AMOUNT
+   ========================================= */
+
+.amount-cell {
+  color: #45d36a;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* =========================================
+   RECEIPT
+   ========================================= */
+
+.receipt-button {
+  display: inline-block;
+
+  padding: 7px 11px;
+
+  border-radius: 8px;
+
+  background: rgba(40, 167, 69, 0.12);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+
+  color: #55dc76;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  transition: 0.2s ease;
+}
+
+.receipt-button:hover {
+  background: #28a745;
+  color: #ffffff;
+}
+
+.no-receipt {
+  color: #66776d;
+  font-size: 12px;
+}
+
+/* =========================================
+   STATUS BADGES
+   ========================================= */
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+
+  padding: 6px 11px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status-badge.pending {
+  background: rgba(255, 193, 7, 0.14);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  color: #ffc107;
+}
+
+.status-badge.approved {
+  background: rgba(40, 167, 69, 0.14);
+  border: 1px solid rgba(40, 167, 69, 0.3);
+  color: #55dc76;
+}
+
+.status-badge.rejected {
+  background: rgba(220, 53, 69, 0.14);
+  border: 1px solid rgba(220, 53, 69, 0.3);
+  color: #ff6b7a;
+}
+
+/* =========================================
+   ACTION BUTTONS
+   ========================================= */
+
+.savings-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.approve-button,
+.reject-button {
+  border: none;
+  border-radius: 8px;
+
+  padding: 7px 11px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.approve-button {
+  background: #28a745;
+  color: #ffffff;
+}
+
+.approve-button:hover {
+  background: #35c257;
+  transform: translateY(-1px);
+}
+
+.reject-button {
+  background: rgba(220, 53, 69, 0.14);
+  border: 1px solid rgba(220, 53, 69, 0.35);
+
+  color: #ff6b7a;
+}
+
+.reject-button:hover {
+  background: #dc3545;
+  color: #ffffff;
+}
+
+.completed-action {
+  color: #72877a;
+  font-size: 12px;
+}
+
+/* =========================================
+   LOADING
+   ========================================= */
+
+.savings-loading {
+  min-height: 70vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.savings-loading h4 {
+  color: #ffffff;
+  margin-top: 15px;
+}
+
+.savings-loading p {
+  color: #8fa196;
+  margin-top: 5px;
+}
+
+.loading-spinner {
+  width: 42px;
+  height: 42px;
+
+  border: 4px solid rgba(255, 255, 255, 0.12);
+  border-top-color: #28a745;
+
+  border-radius: 50%;
+
+  animation: adminSavingsSpin 0.8s linear infinite;
+}
+
+@keyframes adminSavingsSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 992px) {
+  .admin-savings-page {
+    padding: 20px;
+  }
+
+  .admin-savings-header {
+    padding: 23px;
+  }
+
+  .admin-savings-header h1 {
+    font-size: 26px;
+  }
+
+  .savings-card-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .transaction-count {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 576px) {
+  .admin-savings-page {
+    padding: 14px;
+  }
+
+  .admin-savings-header {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .admin-savings-header h1 {
+    font-size: 23px;
+  }
+
+  .admin-savings-header p {
+    font-size: 13px;
+  }
+
+  .approved-summary-card {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .approved-summary-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+  }
+
+  .approved-summary-card h2 {
+    font-size: 25px;
+  }
+
+  .admin-savings-card {
+    border-radius: 14px;
+  }
+
+  .savings-card-header {
+    padding: 20px;
+  }
+
+  .admin-savings-empty {
+    min-height: 280px;
+    padding: 35px 20px;
+  }
+}
+

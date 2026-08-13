@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
 import "../styles/MembersPage.css";
 
 import { auth, db } from "../firebase";
@@ -79,11 +78,7 @@ const loadOrganization = async () => {
     <div className="container-fluid">
       <div className="row">
 
-        <div className="col-md-2">
-          <Sidebar />
-        </div>
-
-        <div className="col-md-10 members-page">
+        <div className="col-12 members-page">
 
           {/* Header */}
 

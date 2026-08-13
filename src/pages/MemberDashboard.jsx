@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
 import { auth, db } from "../firebase";
+import Sidebar from "../components/Sidebar";
 import { doc, getDoc } from "firebase/firestore";
+import {
+  listenToMemberSavings,
+  getMemberApprovedTotal,
+} from "../services/savingsService";
+
+import "../styles/MemberDashboard.css";
 
 function MemberDashboard() {
   const [loading, setLoading] = useState(true);
@@ -12,141 +18,280 @@ function MemberDashboard() {
     organizationCode: "",
     email: "",
     phone: "",
-    savings: 0,
     loanBalance: 0,
   });
 
+  const [approvedTotal, setApprovedTotal] = useState(0);
+
   useEffect(() => {
+    let unsubscribeSavings = null;
+
+    const loadMemberDashboard = async () => {
+      try {
+        const user = auth.currentUser;
+
+        if (!user) {
+          setLoading(false);
+          return;
+        }
+
+        const userRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userRef);
+
+        if (!userSnap.exists()) {
+          setLoading(false);
+          return;
+        }
+
+        const userData = userSnap.data();
+
+        setMember({
+          fullName: userData.fullName || "Member",
+          organizationName:
+            userData.organizationName || "No Organization",
+          organizationCode: userData.organizationCode || "",
+          email: userData.email || user.email || "",
+          phone: userData.phone || "",
+          loanBalance: Number(userData.loanBalance || 0),
+        });
+
+        if (userData.organizationId) {
+          const total = await getMemberApprovedTotal({
+            organizationId: userData.organizationId,
+            memberUid: user.uid,
+          });
+
+          setApprovedTotal(total);
+
+          unsubscribeSavings = listenToMemberSavings({
+            organizationId: userData.organizationId,
+            memberUid: user.uid,
+            callback: (items) => {
+              const approved = items
+                .filter((item) => item.status === "Approved")
+                .reduce(
+                  (sum, item) => sum + Number(item.amount || 0),
+                  0
+                );
+
+              setApprovedTotal(approved);
+            },
+          });
+        }
+      } catch (error) {
+        console.error("Member dashboard error:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     loadMemberDashboard();
+
+    return () => {
+      if (typeof unsubscribeSavings === "function") {
+        unsubscribeSavings();
+      }
+    };
   }, []);
-
-  const loadMemberDashboard = async () => {
-    try {
-      const user = auth.currentUser;
-
-      if (!user) return;
-
-      const userRef = doc(db, "users", user.uid);
-      const userSnap = await getDoc(userRef);
-
-      if (!userSnap.exists()) return;
-
-      const userData = userSnap.data();
-
-      setMember({
-        fullName: userData.fullName || "Member",
-        organizationName:
-          userData.organizationName || "No Organization",
-        organizationCode:
-          userData.organizationCode || "",
-        email: userData.email || "",
-        phone: userData.phone || "",
-        savings: userData.savings || 0,
-        loanBalance: userData.loanBalance || 0,
-      });
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return (
-      <div className="text-center mt-5">
-        <h3>Loading Dashboard...</h3>
+      <div className="member-dashboard-loading">
+        <div className="member-loading-spinner"></div>
+        <h3>Loading your dashboard...</h3>
+        <p>Please wait a moment.</p>
       </div>
     );
   }
 
   return (
-    <div className="container-fluid">
-      <div className="row">
+    <div className="member-dashboard">
+      <Sidebar />
 
-        <div className="col-md-2">
-          <Sidebar />
-        </div>
+      <main className="member-dashboard-content">
+        {/* HEADER */}
+        <section className="member-dashboard-header">
+          <div>
+            <span className="member-section-label">
+              MEMBER DASHBOARD
+            </span>
 
-        <div className="col-md-10 page-container">
+            <h1>
+              Welcome back,{" "}
+              <span>{member.fullName}</span>
+            </h1>
 
-          <h2 className="mb-4">
-            🌾 {member.organizationName}
-          </h2>
-
-          <div className="glass-card p-4 mb-4">
-
-            <h3>
-              Welcome, {member.fullName}
-            </h3>
-
-            <p className="mt-2">
-              Cooperative Code:
-              <strong> {member.organizationCode}</strong>
+            <p>
+              Here's an overview of your cooperative activities
+              and financial information.
             </p>
+          </div>
+        </section>
 
-            <p>Email: {member.email}</p>
+        {/* ORGANIZATION */}
+        <section className="member-organization-card">
+          <div className="organization-icon">🌾</div>
 
-            <p>Phone: {member.phone}</p>
+          <div className="organization-info">
+            <span>YOUR COOPERATIVE ORGANIZATION</span>
 
+            <h2>{member.organizationName}</h2>
+
+            {member.organizationCode && (
+              <p>
+                Cooperative Code:
+                <strong>{member.organizationCode}</strong>
+              </p>
+            )}
+          </div>
+        </section>
+
+        {/* STATISTICS */}
+        <section className="member-statistics">
+          <div className="member-stat-card savings-stat">
+            <div className="stat-icon">💰</div>
+
+            <div>
+              <span>Total Savings</span>
+
+              <h2>
+                ₦{Number(approvedTotal).toLocaleString()}
+              </h2>
+
+              <p>Verified contributions</p>
+            </div>
           </div>
 
-          <div className="row">
+          <div className="member-stat-card loan-stat">
+            <div className="stat-icon">🏦</div>
 
-            <div className="col-md-6">
+            <div>
+              <span>Loan Balance</span>
 
-              <div className="glass-card p-4">
+              <h2>
+                ₦{Number(member.loanBalance).toLocaleString()}
+              </h2>
 
-                <h5>💰 Total Savings</h5>
+              <p>Outstanding loan balance</p>
+            </div>
+          </div>
 
-                <h2 className="text-success mt-3">
-                  ₦{Number(member.savings).toLocaleString()}
-                </h2>
+          <div className="member-stat-card status-stat">
+            <div className="stat-icon">✓</div>
 
-              </div>
+            <div>
+              <span>Membership Status</span>
 
+              <h2>Active</h2>
+
+              <p>Member in good standing</p>
+            </div>
+          </div>
+        </section>
+
+        {/* PROFILE */}
+        <section className="member-profile-card">
+          <div className="card-heading">
+            <div>
+              <span className="member-section-label">
+                ACCOUNT INFORMATION
+              </span>
+
+              <h2>My Profile</h2>
             </div>
 
-            <div className="col-md-6">
+            <div className="profile-avatar">
+              {member.fullName
+                ? member.fullName.charAt(0).toUpperCase()
+                : "M"}
+            </div>
+          </div>
 
-              <div className="glass-card p-4">
-
-                <h5>🏦 Loan Balance</h5>
-
-                <h2 className="text-warning mt-3">
-                  ₦{Number(member.loanBalance).toLocaleString()}
-                </h2>
-
-              </div>
-
+          <div className="profile-grid">
+            <div className="profile-item">
+              <span>Full Name</span>
+              <strong>{member.fullName}</strong>
             </div>
 
+            <div className="profile-item">
+              <span>Email Address</span>
+              <strong>{member.email || "Not provided"}</strong>
+            </div>
+
+            <div className="profile-item">
+              <span>Phone Number</span>
+              <strong>{member.phone || "Not provided"}</strong>
+            </div>
+
+            <div className="profile-item">
+              <span>Cooperative Code</span>
+              <strong>
+                {member.organizationCode || "Not available"}
+              </strong>
+            </div>
+          </div>
+        </section>
+
+        {/* QUICK ACTIONS */}
+        <section className="member-actions-card">
+          <div className="card-heading">
+            <div>
+              <span className="member-section-label">
+                QUICK ACTIONS
+              </span>
+
+              <h2>Manage Your Cooperative Activities</h2>
+            </div>
           </div>
 
-          <div className="glass-card p-4 mt-4">
+          <div className="member-actions-grid">
+            <a href="/savings" className="member-action savings-action">
+              <span>💰</span>
+              <div>
+                <strong>Manage Savings</strong>
+                <small>Submit and track savings payments</small>
+              </div>
+            </a>
 
-            <h4>Member Activities</h4>
+            <a href="/loans" className="member-action loan-action">
+              <span>🏦</span>
+              <div>
+                <strong>Apply for Loan</strong>
+                <small>Request and track cooperative loans</small>
+              </div>
+            </a>
 
+            <a href="/reports" className="member-action report-action">
+              <span>📊</span>
+              <div>
+                <strong>View Reports</strong>
+                <small>Review your financial activity</small>
+              </div>
+            </a>
+
+            <a href="/settings" className="member-action profile-action">
+              <span>⚙️</span>
+              <div>
+                <strong>Account Settings</strong>
+                <small>Update your profile information</small>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        {/* FOOTER MESSAGE */}
+        <section className="member-dashboard-footer">
+          <div>
+            <strong>{member.organizationName}</strong>
             <p>
-              • View Savings
+              Thank you for being an active member of your
+              cooperative community.
             </p>
-
-            <p>
-              • Apply for Loans
-            </p>
-
-            <p>
-              • View Loan History
-            </p>
-
-            <p>
-              • Update Profile
-            </p>
-
           </div>
 
-        </div>
-
-      </div>
+          <span>🌱</span>
+        </section>
+      </main>
     </div>
   );
 }

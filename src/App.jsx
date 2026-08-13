@@ -12,10 +12,12 @@ import AdminDashboard from "./pages/AdminDashboard";
 import MemberDashboard from "./pages/MemberDashboard";
 import MembersPage from "./pages/MembersPage";
 import SavingsPage from "./pages/SavingsPage";
+import AdminSavings from "./pages/AdminSavings";
 import LoansPage from "./pages/LoansPage";
 import InventoryPage from "./pages/InventoryPage";
 import ReportsPage from "./pages/ReportsPage";
 import SettingsPage from "./pages/SettingsPage";
+import AdminLayout from "./components/AdminLayout";
 
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -67,7 +69,9 @@ function App() {
           path="/admin"
           element={
             <ProtectedRoute>
-              <AdminDashboard />
+              <AdminLayout>
+                <AdminDashboard />
+              </AdminLayout>
             </ProtectedRoute>
           }
         />
@@ -85,10 +89,13 @@ function App() {
           path="/members"
           element={
             <ProtectedRoute>
-              <MembersPage />
+              <AdminLayout>
+                <MembersPage />
+              </AdminLayout>
             </ProtectedRoute>
           }
         />
+        {/* Member savings page (members) */}
         <Route
           path="/savings"
           element={
@@ -97,11 +104,25 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* Admin savings management */}
+        <Route
+          path="/admin/savings"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <AdminSavings />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/loans"
           element={
             <ProtectedRoute>
-              <LoansPage />
+              <AdminLayout>
+                <LoansPage />
+              </AdminLayout>
             </ProtectedRoute>
           }
         />
@@ -109,7 +130,9 @@ function App() {
           path="/inventory"
           element={
             <ProtectedRoute>
-              <InventoryPage />
+              <AdminLayout>
+                <InventoryPage />
+              </AdminLayout>
             </ProtectedRoute>
           }
         />
@@ -117,7 +140,9 @@ function App() {
           path="/reports"
           element={
             <ProtectedRoute>
-              <ReportsPage />
+              <AdminLayout>
+                <ReportsPage />
+              </AdminLayout>
             </ProtectedRoute>
           }
         />
@@ -125,7 +150,9 @@ function App() {
           path="/settings"
           element={
             <ProtectedRoute>
-              <SettingsPage />
+              <AdminLayout>
+                <SettingsPage />
+              </AdminLayout>
             </ProtectedRoute>
           }
         />

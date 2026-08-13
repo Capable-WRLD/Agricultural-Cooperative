@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { collection, onSnapshot } from "firebase/firestore";
-import { db } from "../firebase";
-import Sidebar from "../components/Sidebar";
+import { collection, onSnapshot, getDoc, doc } from "firebase/firestore";
+import { db, auth } from "../firebase";
 import StatsCard from "../components/StatsCard";
 import { getDashboardData } from "../services/dashboardService";
 
@@ -10,6 +9,8 @@ function AdminDashboard() {
   const [approvedMembers, setApprovedMembers] = useState([]);
   const [totalMembers, setTotalMembers] = useState(0);
   const [activeMembers, setActiveMembers] = useState(0);
+  const [savings, setSavings] = useState(null);
+  const [loanCount, setLoanCount] = useState(0);
 
   useEffect(() => {
     loadDashboard();
@@ -18,19 +19,14 @@ function AdminDashboard() {
   useEffect(() => {
     if (!dashboard) return;
 
-    const organizationId =
+    const orgId =
       dashboard?.organization?.id ||
       dashboard?.organizationId ||
       dashboard?.organization?.organizationId;
 
-    if (!organizationId) return;
+    if (!orgId) return;
 
-    const membersRef = collection(
-      db,
-      "organizations",
-      organizationId,
-      "members"
-    );
+    const membersRef = collection(db, "organizations", orgId, "members");
 
     const unsubscribe = onSnapshot(
       membersRef,
@@ -43,9 +39,7 @@ function AdminDashboard() {
         setApprovedMembers(membersData);
         setTotalMembers(membersData.length);
         setActiveMembers(
-          membersData.filter(
-            (member) => member.status === "Active"
-          ).length
+          membersData.filter((member) => member.status === "Active").length
         );
       },
       (error) => {
@@ -56,10 +50,30 @@ function AdminDashboard() {
     return () => unsubscribe();
   }, [dashboard]);
 
+  useEffect(() => {
+    const loadSavings = async () => {
+      const currentUser = auth.currentUser;
+      if (!currentUser) return;
+
+      try {
+        const userRef = doc(db, "users", currentUser.uid);
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          setSavings(userSnap.data()?.savings ?? null);
+        }
+      } catch (error) {
+        console.error("Error loading savings:", error);
+      }
+    };
+
+    loadSavings();
+  }, []);
+
   const loadDashboard = async () => {
     try {
       const data = await getDashboardData();
       setDashboard(data);
+      setLoanCount(Array.isArray(data.loans) ? data.loans.length : 0);
     } catch (error) {
       console.error(error);
     }
@@ -74,11 +88,7 @@ function AdminDashboard() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-md-2">
-          <Sidebar />
-        </div>
-
-        <div className="col-md-10 page-container">
+        <div className="col-12 page-container">
 
           {/* Organization Information */}
 
@@ -149,7 +159,7 @@ function AdminDashboard() {
             <div className="col-md-3">
               <StatsCard
                 title="Savings"
-                value="₦0"
+                value={savings !== null ? `₦${savings}` : "No savings yet"}
                 icon="bi-wallet2"
               />
             </div>
@@ -157,7 +167,7 @@ function AdminDashboard() {
             <div className="col-md-3">
               <StatsCard
                 title="Loans"
-                value={activeMembers}
+                value={loanCount}
                 icon="bi-cash-stack"
               />
             </div>

@@ -11,6 +11,7 @@ import {
   getDoc,
   setDoc,
 } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCUsfScdbAhkGfY67nuMeEm5l3sEpFKrXs",
@@ -32,5 +33,8 @@ export const db = getFirestore(app);
 
 // Firestore Helpers
 export { doc, getDoc, setDoc };
+
+// Storage
+export const storage = getStorage(app);
 
 export default app;

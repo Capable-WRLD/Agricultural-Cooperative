@@ -21,7 +21,7 @@ export const getDashboardData = async () => {
   let organization = null;
 
   if (orgSnap.exists()) {
-    organization = orgSnap.data();
+    organization = { id: orgSnap.id, ...orgSnap.data() };
   }
 
   return {

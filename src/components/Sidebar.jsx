@@ -5,7 +5,8 @@ import { doc, getDoc } from "firebase/firestore";
 import "../styles/Sidebar.css";
 
 function Sidebar({ closeSidebar }) {
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState(null);
+  const [loadingRole, setLoadingRole] = useState(true);
   const [organizationName, setOrganizationName] = useState("AgroCoop");
 
   useEffect(() => {
@@ -16,23 +17,37 @@ function Sidebar({ closeSidebar }) {
     try {
       const user = auth.currentUser;
 
-      if (!user) return;
+      if (!user) {
+        setLoadingRole(false);
+        return;
+      }
 
       const snap = await getDoc(doc(db, "users", user.uid));
 
-      if (!snap.exists()) return;
+      if (!snap.exists()) {
+        setLoadingRole(false);
+        return;
+      }
 
       const data = snap.data();
 
-      setRole(data.role);
+      setRole(data.role || "Member");
 
       if (data.organizationName) {
         setOrganizationName(data.organizationName);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoadingRole(false);
     }
   };
+
+  const dashboardLink = !loadingRole
+    ? role === "Admin"
+      ? "/admin"
+      : "/member"
+    : null;
 
   return (
     <aside className="sidebar">
@@ -44,22 +59,28 @@ function Sidebar({ closeSidebar }) {
         <h6 className="mt-2">{organizationName}</h6>
 
         <p>
-          {role === "Admin" ? "Admin Panel" : "Member Panel"}
+          {loadingRole
+            ? "Loading..."
+            : role === "Admin"
+            ? "Admin Panel"
+            : "Member Panel"}
         </p>
 
       </div>
 
       <nav className="sidebar-menu">
 
-        <NavLink
-          to={role === "Admin" ? "/admin" : "/member"}
-          onClick={closeSidebar}
-          className={({ isActive }) =>
-            isActive ? "sidebar-link active" : "sidebar-link"
-          }
-        >
-          📊 Dashboard
-        </NavLink>
+        {dashboardLink && (
+          <NavLink
+            to={dashboardLink}
+            onClick={closeSidebar}
+            className={({ isActive }) =>
+              isActive ? "sidebar-link active" : "sidebar-link"
+            }
+          >
+            📊 Dashboard
+          </NavLink>
+        )}
 
         {role === "Admin" && (
           <NavLink
@@ -74,7 +95,7 @@ function Sidebar({ closeSidebar }) {
         )}
 
         <NavLink
-          to="/savings"
+          to={role === "Admin" ? "/admin/savings" : "/savings"}
           onClick={closeSidebar}
           className={({ isActive }) =>
             isActive ? "sidebar-link active" : "sidebar-link"
