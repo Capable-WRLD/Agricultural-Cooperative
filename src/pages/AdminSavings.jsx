@@ -55,8 +55,19 @@ function AdminSavings() {
           organizationId: orgId,
 
           callback: (items) => {
-            console.log("Savings transactions:", items);
-            setTransactions(items);
+            const list = items || [];
+
+            console.log("Savings transactions:", list);
+
+            // update transactions list
+            setTransactions(list);
+
+            // compute approved total reactively so admin summary updates in real-time
+            const approvedTotal = list
+              .filter((t) => t.status === "Approved")
+              .reduce((acc, t) => acc + Number(t.amount || 0), 0);
+
+            setTotalApproved(approvedTotal);
           },
         });
 

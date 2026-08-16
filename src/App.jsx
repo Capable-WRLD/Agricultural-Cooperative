@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
@@ -16,161 +16,223 @@ import AdminSavings from "./pages/AdminSavings";
 import LoansPage from "./pages/LoansPage";
 import InventoryPage from "./pages/InventoryPage";
 import ReportsPage from "./pages/ReportsPage";
-import SettingsPage from "./pages/SettingsPage";
-import AdminLayout from "./components/AdminLayout";
 
+import SettingsRouter from "./components/SettingsRouter";
+import AdminLayout from "./components/AdminLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+
+import { AuthProvider } from "./context/AuthContext";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
-    <BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
 
-      <Routes>
+          {/* =========================
+              PUBLIC
+          ========================= */}
 
-        {/* Public Pages */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+          <Route path="/" element={<LandingPage />} />
 
-        {/* Email Verification */}
-        <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/login" element={<LoginPage />} />
 
-        {/* After Verification */}
-        <Route
-          path="/choose-role"
-          element={
-            <ProtectedRoute>
-              <ChooseRole />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/create-organization"
-          element={
-            <ProtectedRoute>
-              <CreateOrganization />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/join-organization"
-          element={
-            <ProtectedRoute>
-              <JoinOrganization />
-            </ProtectedRoute>
-          }
-        />
+          <Route path="/register" element={<RegisterPage />} />
 
-        {/* Dashboards */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute>
-              <AdminLayout>
-                <AdminDashboard />
-              </AdminLayout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/member"
-          element={
-            <ProtectedRoute>
-              <MemberDashboard />
-            </ProtectedRoute>
-          }
-        />
+          <Route
+            path="/verify-email"
+            element={<VerifyEmail />}
+          />
 
-        {/* Admin Pages */}
-        <Route
-          path="/members"
-          element={
-            <ProtectedRoute>
-              <AdminLayout>
-                <MembersPage />
-              </AdminLayout>
-            </ProtectedRoute>
-          }
-        />
-        {/* Member savings page (members) */}
-        <Route
-          path="/savings"
-          element={
-            <ProtectedRoute>
-              <SavingsPage />
-            </ProtectedRoute>
-          }
-        />
+          {/* =========================
+              ACCOUNT SETUP
+          ========================= */}
 
-        {/* Admin savings management */}
-        <Route
-          path="/admin/savings"
-          element={
-            <ProtectedRoute>
-              <AdminLayout>
-                <AdminSavings />
-              </AdminLayout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/loans"
-          element={
-            <ProtectedRoute>
-              <AdminLayout>
+          <Route
+            path="/choose-role"
+            element={
+              <ProtectedRoute>
+                <ChooseRole />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/create-organization"
+            element={
+              <ProtectedRoute>
+                <CreateOrganization />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/join-organization"
+            element={
+              <ProtectedRoute>
+                <JoinOrganization />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              ADMIN DASHBOARD
+          ========================= */}
+
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                <AdminLayout>
+                  <AdminDashboard />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              MEMBER DASHBOARD
+          ========================= */}
+
+          <Route
+            path="/member"
+            element={
+              <ProtectedRoute allowedRoles={["Member"]}>
+                <MemberDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              ADMIN MEMBERS
+          ========================= */}
+
+          <Route
+            path="/members"
+            element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                <AdminLayout>
+                  <MembersPage />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              MEMBER SAVINGS
+          ========================= */}
+
+          <Route
+            path="/savings"
+            element={
+              <ProtectedRoute allowedRoles={["Member"]}>
+                <SavingsPage />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              ADMIN SAVINGS
+          ========================= */}
+
+          <Route
+            path="/admin/savings"
+            element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                <AdminLayout>
+                  <AdminSavings />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              LOANS
+              ADMIN + MEMBER
+          ========================= */}
+
+          <Route
+            path="/loans"
+            element={
+              <ProtectedRoute allowedRoles={["Admin", "Member"]}>
                 <LoansPage />
-              </AdminLayout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/inventory"
-          element={
-            <ProtectedRoute>
-              <AdminLayout>
-                <InventoryPage />
-              </AdminLayout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/reports"
-          element={
-            <ProtectedRoute>
-              <AdminLayout>
-                <ReportsPage />
-              </AdminLayout>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <ProtectedRoute>
-              <AdminLayout>
-                <SettingsPage />
-              </AdminLayout>
-            </ProtectedRoute>
-          }
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              INVENTORY
+              ADMIN ONLY
+          ========================= */}
+
+          <Route
+            path="/inventory"
+            element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                <AdminLayout>
+                  <InventoryPage />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              REPORTS
+              ADMIN ONLY
+          ========================= */}
+
+          <Route
+            path="/reports"
+            element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                <AdminLayout>
+                  <ReportsPage />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              SETTINGS
+              ADMIN + MEMBER
+          ========================= */}
+
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute allowedRoles={["Admin", "Member"]}>
+                <SettingsRouter />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* =========================
+              FALLBACK
+          ========================= */}
+
+          <Route
+            path="*"
+            element={<LandingPage />}
+          />
+
+        </Routes>
+
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          pauseOnHover
+          draggable
+          theme="colored"
         />
 
-      </Routes>
-
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="colored"
-      />
-
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

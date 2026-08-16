@@ -119,7 +119,17 @@ function SavingsPage() {
           organizationId: orgId,
           memberUid: user.uid,
           callback: (items) => {
-            setHistory(items || []);
+            const list = items || [];
+
+            // update history
+            setHistory(list);
+
+            // update approved total reactively so the balance updates after admin approval
+            const approvedSum = list
+              .filter((it) => it.status === "Approved")
+              .reduce((acc, it) => acc + Number(it.amount || 0), 0);
+
+            setApprovedTotal(approvedSum);
           },
         });
 

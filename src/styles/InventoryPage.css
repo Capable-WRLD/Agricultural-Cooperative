@@ -1,0 +1,485 @@
+/* ============================================================
+   INVENTORY PAGE
+   AgroCoop - Green Glassmorphism Theme
+   ============================================================ */
+
+.inventory-page {
+  min-height: 100vh;
+  padding: 35px;
+  color: #ffffff;
+  background:
+    radial-gradient(circle at top right, rgba(40, 167, 69, 0.12), transparent 35%),
+    linear-gradient(135deg, #071426 0%, #0a192f 55%, #06101f 100%);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 30px;
+  padding: 30px;
+  border: 1px solid rgba(40, 167, 69, 0.2);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+.inventory-label {
+  display: inline-block;
+  margin-bottom: 10px;
+  padding: 7px 14px;
+  border-radius: 20px;
+  background: rgba(40, 167, 69, 0.14);
+  color: #65d879;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+
+.inventory-header h1 {
+  margin: 0 0 10px;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.inventory-header p {
+  margin: 0;
+  color: #b8c3cf;
+  line-height: 1.7;
+}
+
+.inventory-header-badge {
+  flex-shrink: 0;
+  padding: 12px 20px;
+  border: 1px solid rgba(40, 167, 69, 0.35);
+  border-radius: 30px;
+  background: rgba(40, 167, 69, 0.12);
+  color: #65d879;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   STATISTICS
+   ============================================================ */
+
+.inventory-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.inventory-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-height: 110px;
+  padding: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(16px);
+  transition: 0.25s ease;
+}
+
+.inventory-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(40, 167, 69, 0.35);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+}
+
+.inventory-stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: rgba(40, 167, 69, 0.14);
+  font-size: 24px;
+}
+
+.inventory-stat-icon.warning {
+  background: rgba(255, 193, 7, 0.14);
+}
+
+.inventory-stat-card span {
+  display: block;
+  margin-bottom: 5px;
+  color: #9eabb9;
+  font-size: 13px;
+}
+
+.inventory-stat-card strong {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+}
+
+/* ============================================================
+   FORM CARD
+   ============================================================ */
+
+.inventory-form-card,
+.inventory-list-card {
+  margin-bottom: 30px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+.inventory-card-heading,
+.inventory-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.inventory-card-heading h2,
+.inventory-list-header h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 750;
+}
+
+.inventory-card-heading p,
+.inventory-list-header p {
+  margin: 0;
+  color: #9eabb9;
+}
+
+/* ============================================================
+   FORM
+   ============================================================ */
+
+.inventory-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-bottom: 25px;
+}
+
+.inventory-form-group label {
+  display: block;
+  margin-bottom: 9px;
+  color: #d8e0e8;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.inventory-form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  outline: none;
+  background: rgba(0, 0, 0, 0.18);
+  color: #ffffff;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+}
+
+.inventory-form-group input::placeholder {
+  color: #687686;
+}
+
+.inventory-form-group input:focus {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.12);
+}
+
+/* ============================================================
+   MONEY INPUT
+   ============================================================ */
+
+.inventory-money-input {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.inventory-money-input span {
+  padding-left: 16px;
+  color: #65d879;
+  font-weight: 800;
+}
+
+.inventory-money-input input {
+  border: none;
+  background: transparent;
+}
+
+.inventory-money-input input:focus {
+  box-shadow: none;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.inventory-save-button,
+.inventory-edit-button,
+.inventory-delete-button,
+.inventory-cancel-button {
+  border: none;
+  border-radius: 11px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.inventory-save-button {
+  width: 100%;
+  padding: 15px;
+  background: #28a745;
+  color: #ffffff;
+}
+
+.inventory-save-button:hover {
+  background: #218838;
+  transform: translateY(-1px);
+}
+
+.inventory-save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.inventory-cancel-button {
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #d5dde5;
+}
+
+.inventory-cancel-button:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+/* ============================================================
+   TABLE
+   ============================================================ */
+
+.inventory-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 850px;
+}
+
+.inventory-table th {
+  padding: 15px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: #65d879;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inventory-table td {
+  padding: 17px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  color: #c9d2dc;
+}
+
+.inventory-table tbody tr {
+  transition: 0.2s ease;
+}
+
+.inventory-table tbody tr:hover {
+  background: rgba(40, 167, 69, 0.045);
+}
+
+.inventory-item-name {
+  color: #ffffff;
+}
+
+.inventory-value {
+  color: #65d879;
+}
+
+/* ============================================================
+   STOCK STATUS
+   ============================================================ */
+
+.inventory-status {
+  display: inline-block;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.inventory-status.good {
+  background: rgba(40, 167, 69, 0.13);
+  color: #65d879;
+}
+
+.inventory-status.low {
+  background: rgba(255, 193, 7, 0.13);
+  color: #ffc107;
+}
+
+/* ============================================================
+   ACTIONS
+   ============================================================ */
+
+.inventory-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.inventory-edit-button {
+  padding: 8px 13px;
+  background: rgba(40, 167, 69, 0.15);
+  color: #65d879;
+}
+
+.inventory-edit-button:hover {
+  background: #28a745;
+  color: #ffffff;
+}
+
+.inventory-delete-button {
+  padding: 8px 13px;
+  background: rgba(220, 53, 69, 0.12);
+  color: #ff7b88;
+}
+
+.inventory-delete-button:hover {
+  background: #dc3545;
+  color: #ffffff;
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.inventory-empty {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.inventory-empty-icon {
+  margin-bottom: 15px;
+  font-size: 50px;
+}
+
+.inventory-empty h3 {
+  margin-bottom: 8px;
+  color: #ffffff;
+}
+
+.inventory-empty p {
+  margin: 0;
+  color: #8f9dab;
+}
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+.inventory-loading {
+  display: flex;
+  min-height: 60vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.inventory-loading h3 {
+  margin-top: 20px;
+  color: #ffffff;
+}
+
+.inventory-loading p {
+  color: #8f9dab;
+}
+
+.inventory-spinner {
+  width: 45px;
+  height: 45px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #28a745;
+  border-radius: 50%;
+  animation: inventorySpin 0.8s linear infinite;
+}
+
+@keyframes inventorySpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1100px) {
+  .inventory-stat-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .inventory-page {
+    padding: 20px 15px;
+  }
+
+  .inventory-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+  }
+
+  .inventory-header h1 {
+    font-size: 26px;
+  }
+
+  .inventory-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .inventory-form-card,
+  .inventory-list-card {
+    padding: 22px 18px;
+  }
+
+  .inventory-card-heading,
+  .inventory-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .inventory-actions {
+    flex-direction: column;
+  }
+}
