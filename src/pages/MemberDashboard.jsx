@@ -6,6 +6,7 @@ import {
   listenToMemberSavings,
   getMemberApprovedTotal,
 } from "../services/savingsService";
+import { listenToMemberLoans } from "../services/loanService";
 
 import "../styles/MemberDashboard.css";
 
@@ -18,13 +19,14 @@ function MemberDashboard() {
     organizationCode: "",
     email: "",
     phone: "",
-    loanBalance: 0,
   });
 
   const [approvedTotal, setApprovedTotal] = useState(0);
+  const [memberLoans, setMemberLoans] = useState([]);
 
   useEffect(() => {
     let unsubscribeSavings = null;
+    let unsubscribeLoans = null;
 
     const loadMemberDashboard = async () => {
       try {
@@ -52,7 +54,6 @@ function MemberDashboard() {
           organizationCode: userData.organizationCode || "",
           email: userData.email || user.email || "",
           phone: userData.phone || "",
-          loanBalance: Number(userData.loanBalance || 0),
         });
 
         if (userData.organizationId) {
@@ -77,6 +78,12 @@ function MemberDashboard() {
               setApprovedTotal(approved);
             },
           });
+
+          unsubscribeLoans = listenToMemberLoans({
+            organizationId: userData.organizationId,
+            memberUid: user.uid,
+            callback: setMemberLoans,
+          });
         }
       } catch (error) {
         console.error("Member dashboard error:", error);
@@ -91,6 +98,9 @@ function MemberDashboard() {
       if (typeof unsubscribeSavings === "function") {
         unsubscribeSavings();
       }
+      if (typeof unsubscribeLoans === "function") {
+        unsubscribeLoans();
+      }
     };
   }, []);
 
@@ -103,6 +113,14 @@ function MemberDashboard() {
       </div>
     );
   }
+
+  const activeLoans = memberLoans.filter(
+    (loan) => loan.status === "Approved" && Number(loan.remainingBalance || 0) > 0
+  );
+  const outstandingBalance = activeLoans.reduce(
+    (total, loan) => total + Number(loan.remainingBalance || 0),
+    0
+  );
 
   return (
     <div className="member-dashboard">
@@ -169,7 +187,7 @@ function MemberDashboard() {
               <span>Loan Balance</span>
 
               <h2>
-                ₦{Number(member.loanBalance).toLocaleString()}
+                ₦{Number(outstandingBalance).toLocaleString()}
               </h2>
 
               <p>Outstanding loan balance</p>
@@ -187,6 +205,36 @@ function MemberDashboard() {
               <p>Member in good standing</p>
             </div>
           </div>
+        </section>
+
+        <section className="member-profile-card">
+          <div className="card-heading">
+            <div>
+              <span className="member-section-label">LOAN OVERVIEW</span>
+              <h2>My Loan Repayments</h2>
+            </div>
+          </div>
+
+          {memberLoans.length === 0 ? (
+            <p>No loan records yet.</p>
+          ) : (
+            <div className="table-responsive">
+              <table className="table table-dark table-borderless mb-0">
+                <thead><tr><th>Status</th><th>Original Amount</th><th>Amount Repaid</th><th>Remaining Balance</th><th>Monthly Repayment</th></tr></thead>
+                <tbody>
+                  {memberLoans.map((loan) => (
+                    <tr key={loan.id}>
+                      <td>{loan.status || "Pending"}</td>
+                      <td>₦{Number(loan.amount || 0).toLocaleString()}</td>
+                      <td>₦{Number(loan.amountRepaid || 0).toLocaleString()}</td>
+                      <td>₦{Number(loan.remainingBalance || 0).toLocaleString()}</td>
+                      <td>{loan.monthlyRepayment ? `₦${Number(loan.monthlyRepayment).toLocaleString()}` : "-"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </section>
 
         {/* PROFILE */}

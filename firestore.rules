@@ -1,62 +1,138 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function currentUser() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function belongsTo(orgId) { return signedIn() && currentUser().organizationId == orgId; }
+    function isOrgAdmin(orgId) { return belongsTo(orgId) && currentUser().role == 'Admin'; }
 
-    // Users
+    // Members can change only their basic profile. Roles, organization links,
+    // and financial balances are never self-service fields.
     match /users/{userId} {
-      allow read: if request.auth != null && request.auth.uid == userId;
-      allow write: if request.auth != null && request.auth.uid == userId;
+      allow read: if signedIn() && request.auth.uid == userId;
+      allow create: if signedIn() && request.auth.uid == userId
+        && request.resource.data.role == null
+        && request.resource.data.organizationId == null;
+      allow update: if signedIn() && (
+        (request.auth.uid == userId
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['fullName', 'phone']))
+        ||
+        // One-time client setup for a brand-new account. An Admin role is
+        // allowed only for the account that created that organization; a
+        // Member role requires that account's member record to exist first.
+        (request.auth.uid == userId
+          && resource.data.role == null
+          && resource.data.organizationId == null
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['organizationId', 'organizationName', 'organizationCode', 'role', 'status'])
+          && (
+            (request.resource.data.role == 'Admin'
+              && exists(/databases/$(database)/documents/organizations/$(request.resource.data.organizationId))
+              && get(/databases/$(database)/documents/organizations/$(request.resource.data.organizationId)).data.adminUID == request.auth.uid)
+            ||
+            (request.resource.data.role == 'Member'
+              && exists(/databases/$(database)/documents/organizations/$(request.resource.data.organizationId)/members/$(userId)))
+          ))
+        ||
+        (isOrgAdmin(resource.data.organizationId)
+          && request.resource.data.role == resource.data.role
+          && request.resource.data.organizationId == resource.data.organizationId
+          && request.resource.data.diff(resource.data).affectedKeys()
+            .hasOnly(['savings', 'loanBalance']))
+      );
+      allow delete: if false;
     }
 
-    // Organizations
     match /organizations/{orgId} {
-      allow read: if request.auth != null;
-      allow write: if false; // manage organizations via backend only
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.adminUID == request.auth.uid;
+      allow update, delete: if false;
 
-      // Members subcollection
       match /members/{memberId} {
-        allow read: if request.auth != null && (resource.data.organizationId == get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin');
-        allow create: if request.auth != null && request.auth.uid == memberId;
-        allow update: if request.auth != null && (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin' && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId == orgId);
+        allow read: if belongsTo(orgId);
+        allow create: if signedIn() && request.auth.uid == memberId
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.role == 'Member';
+        allow update: if isOrgAdmin(orgId);
         allow delete: if false;
       }
 
-      // Savings transactions
       match /savings/{savingsId} {
-        allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId == orgId;
-
-        // Members can create pending savings for their organization only
-        allow create: if request.auth != null
+        allow read: if belongsTo(orgId);
+        allow create: if belongsTo(orgId)
           && request.resource.data.memberUid == request.auth.uid
           && request.resource.data.organizationId == orgId
           && request.resource.data.status == 'Pending'
           && request.resource.data.amount is number;
-
-        // Members cannot update approved/rejected transactions
-        allow update: if request.auth != null && (
-          // Admins can update status (approve/reject)
-          (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin'
-            && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId == orgId
-            && (request.resource.data.status == 'Approved' || request.resource.data.status == 'Rejected'))
-          // Members cannot change any transaction
-          || false
-        );
-
+        allow update: if isOrgAdmin(orgId)
+          && request.resource.data.memberUid == resource.data.memberUid
+          && request.resource.data.organizationId == resource.data.organizationId
+          && request.resource.data.amount == resource.data.amount
+          && request.resource.data.status in ['Approved', 'Rejected'];
         allow delete: if false;
       }
 
-      // Payment Settings
       match /paymentSettings/{docId} {
-        allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId == orgId;
-        allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin' && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId == orgId;
+        allow read: if belongsTo(orgId);
+        allow write: if isOrgAdmin(orgId);
       }
 
-      // Loan Policy
       match /loanPolicy/{docId} {
-        allow read: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId == orgId;
-        allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'Admin' && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.organizationId == orgId;
+        allow read: if belongsTo(orgId);
+        allow write: if isOrgAdmin(orgId);
       }
 
+      match /loans/{loanId} {
+        allow read: if belongsTo(orgId);
+        allow create: if belongsTo(orgId)
+          && currentUser().role == 'Member'
+          && request.auth.uid == request.resource.data.userId
+          && request.resource.data.organizationId == orgId
+          && request.resource.data.status == 'Pending'
+          && request.resource.data.amount is number
+          && request.resource.data.duration is number
+          && exists(/databases/$(database)/documents/organizations/$(orgId)/loanPolicy/currentPolicy)
+          && exists(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid))
+          && get(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.savings >= get(/databases/$(database)/documents/organizations/$(orgId)/loanPolicy/currentPolicy).data.minimumSavings
+          && request.resource.data.amount >= get(/databases/$(database)/documents/organizations/$(orgId)/loanPolicy/currentPolicy).data.minimumLoanAmount
+          && request.resource.data.amount <= get(/databases/$(database)/documents/organizations/$(orgId)/loanPolicy/currentPolicy).data.maximumLoanAmount
+          && request.resource.data.amount <= (get(/databases/$(database)/documents/organizations/$(orgId)/members/$(request.auth.uid)).data.savings * get(/databases/$(database)/documents/organizations/$(orgId)/loanPolicy/currentPolicy).data.loanMultiplier)
+          && request.resource.data.duration <= get(/databases/$(database)/documents/organizations/$(orgId)/loanPolicy/currentPolicy).data.maximumDuration;
+        allow update: if isOrgAdmin(orgId)
+          && request.resource.data.organizationId == resource.data.organizationId
+          && request.resource.data.userId == resource.data.userId
+          && request.resource.data.userName == resource.data.userName
+          && request.resource.data.amount == resource.data.amount
+          && request.resource.data.reason == resource.data.reason
+          && request.resource.data.duration == resource.data.duration
+          && request.resource.data.status in ['Approved', 'Rejected', 'Paid'];
+        allow delete: if false;
+      }
+
+      match /repayments/{repaymentId} {
+        allow read: if belongsTo(orgId)
+          && (isOrgAdmin(orgId) || resource.data.memberUid == request.auth.uid);
+        allow create: if belongsTo(orgId)
+          && currentUser().role == 'Member'
+          && request.resource.data.organizationId == orgId
+          && request.resource.data.memberUid == request.auth.uid
+          && request.resource.data.status == 'Pending'
+          && request.resource.data.amount is number
+          && request.resource.data.amount > 0
+          && request.resource.data.receiptUrl is string
+          && exists(/databases/$(database)/documents/organizations/$(orgId)/loans/$(request.resource.data.loanId))
+          && get(/databases/$(database)/documents/organizations/$(orgId)/loans/$(request.resource.data.loanId)).data.userId == request.auth.uid
+          && get(/databases/$(database)/documents/organizations/$(orgId)/loans/$(request.resource.data.loanId)).data.status == 'Approved'
+          && request.resource.data.amount <= get(/databases/$(database)/documents/organizations/$(orgId)/loans/$(request.resource.data.loanId)).data.remainingBalance;
+        allow update: if isOrgAdmin(orgId)
+          && request.resource.data.organizationId == resource.data.organizationId
+          && request.resource.data.loanId == resource.data.loanId
+          && request.resource.data.memberUid == resource.data.memberUid
+          && request.resource.data.amount == resource.data.amount
+          && request.resource.data.status in ['Approved', 'Rejected'];
+        allow delete: if false;
+      }
     }
   }
 }

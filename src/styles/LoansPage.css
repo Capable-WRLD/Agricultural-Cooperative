@@ -114,6 +114,35 @@
   color: #aeb8c5;
 }
 
+/* Eligibility summary (inserted UI) */
+.loan-eligibility-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.loan-eligibility-summary div {
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.04);
+  color: #dce3ec;
+}
+
+.loan-eligibility-summary strong {
+  display: block;
+  font-size: 12px;
+  color: #9fb8a8;
+  margin-bottom: 6px;
+}
+
+.loan-eligibility-summary div > div {
+  font-weight: 800;
+  font-size: 16px;
+  color: #ffffff;
+}
+
 /* =========================================================
    FORM
    ========================================================= */
