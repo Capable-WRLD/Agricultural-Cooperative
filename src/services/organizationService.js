@@ -2,7 +2,6 @@ import { db } from "../firebase";
 import {
   collection,
   addDoc,
-  updateDoc,
   doc,
   getDoc,
   getDocs,
@@ -10,6 +9,7 @@ import {
   where,
   setDoc,
 } from "firebase/firestore";
+import { ensureUserProfile } from "./userService";
 
 // ===============================
 // Generate Cooperative Code
@@ -40,12 +40,15 @@ export const createOrganization = async (organizationData) => {
 // Update User Organization
 // ===============================
 export const updateUserOrganization = async (
-  uid,
+  user,
   organizationData
 ) => {
-  await updateDoc(
-    doc(db, "users", uid),
-    organizationData
+  await ensureUserProfile(user);
+
+  await setDoc(
+    doc(db, "users", user.uid),
+    organizationData,
+    { merge: true }
   );
 };
 
@@ -79,6 +82,12 @@ export const joinOrganization = async (
   organization,
   user
 ) => {
+  if (!organization?.id) {
+    throw new Error("Select an organization before joining.");
+  }
+
+  await ensureUserProfile(user);
+
   // Read current user profile
   const userRef = doc(db, "users", user.uid);
 
@@ -113,13 +122,13 @@ export const joinOrganization = async (
   );
 
   // Update user's profile
-  await updateDoc(userRef, {
+  await setDoc(userRef, {
     organizationId: organization.id,
     organizationName: organization.organizationName,
     organizationCode: organization.organizationCode,
     role: "Member",
     status: "Active",
-  });
+  }, { merge: true });
 
   return true;
 };

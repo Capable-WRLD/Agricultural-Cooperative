@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
+import { useAuth } from "../context/AuthContext";
 import {
   findOrganizationByCode,
   joinOrganization,
@@ -12,6 +13,7 @@ import { toast } from "react-toastify";
 function JoinOrganization() {
 
   const navigate = useNavigate();
+  const { refreshUser } = useAuth();
 
   const [organizationCode, setOrganizationCode] = useState("");
   const [organization, setOrganization] = useState(null);
@@ -78,6 +80,8 @@ function JoinOrganization() {
       }
 
       await joinOrganization(organization, user);
+
+      await refreshUser();
 
       toast.success("Successfully joined organization!");
 

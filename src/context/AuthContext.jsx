@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -6,11 +6,42 @@ import { doc, getDoc } from "firebase/firestore";
 const AuthContext = createContext({
   user: null,
   loading: true,
+  refreshUser: async () => null,
 });
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const refreshUser = useCallback(async () => {
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      setUser(null);
+      setLoading(false);
+      return null;
+    }
+
+    setLoading(true);
+
+    try {
+      const userRef = doc(db, "users", currentUser.uid);
+      const snap = await getDoc(userRef);
+      const refreshedUser = snap.exists()
+        ? { uid: currentUser.uid, email: currentUser.email, ...snap.data() }
+        : { uid: currentUser.uid, email: currentUser.email };
+
+      setUser(refreshedUser);
+      return refreshedUser;
+    } catch (error) {
+      console.error("Error refreshing user data:", error);
+      const fallbackUser = { uid: currentUser.uid, email: currentUser.email };
+      setUser(fallbackUser);
+      return fallbackUser;
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -21,33 +52,14 @@ export function AuthProvider({ children }) {
         return;
       }
 
-      // When signed in, load the Firestore user document
-      try {
-        setLoading(true);
-
-        const userRef = doc(db, "users", currentUser.uid);
-        const snap = await getDoc(userRef);
-
-        if (snap.exists()) {
-          const userData = snap.data();
-          setUser({ uid: currentUser.uid, email: currentUser.email, ...userData });
-        } else {
-          // Fallback to basic auth user info if no firestore doc
-          setUser({ uid: currentUser.uid, email: currentUser.email });
-        }
-      } catch (error) {
-        console.error("Error loading user data:", error);
-        setUser({ uid: currentUser.uid, email: currentUser.email });
-      } finally {
-        setLoading(false);
-      }
+      await refreshUser();
     });
 
     return unsubscribe;
-  }, []);
+  }, [refreshUser]);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user, loading, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );
